@@ -1,0 +1,25 @@
+import { RadioGroup, FormControlLabel, FormControl } from '@mui/material';
+import { Radio, FormLabel } from '@mui/material';
+
+export default function SetCatergory({ handleCategory }) {
+  return (
+    <FormControl onChange={e => handleCategory(e.target.value)} sx={{ mt: 4 }}>
+      <FormLabel id="radio-buttons-group-label">Category</FormLabel>
+      <RadioGroup
+        aria-labelledby="radio-buttons-group-label"
+        defaultValue="hookah"
+        name="radio-buttons-group"
+        sx={{ flexDirection: 'row' }}
+      >
+        <FormControlLabel value="hookah" control={<Radio />} label="Hookah" />
+        <FormControlLabel value="tobacco" control={<Radio />} label="Tobacco" />
+        <FormControlLabel value="coal" control={<Radio />} label="Coal" />
+        <FormControlLabel
+          value="accessory"
+          control={<Radio />}
+          label="Accessory"
+        />
+      </RadioGroup>
+    </FormControl>
+  );
+}

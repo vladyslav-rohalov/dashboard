@@ -84,11 +84,11 @@ export const theme = createTheme({
     MuiSelect: {
       styleOverrides: {
         select: ({ theme }) => ({
-          color: `${theme.palette.primary.dim} !important`,
+          color: `${theme.palette.primary.main} !important`,
         }),
         root: ({ theme }) => ({
           '.MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.primary.dim,
+            borderColor: theme.palette.primary.main,
           },
           '&:hover': {
             '.MuiSvgIcon-root ': {
@@ -104,7 +104,7 @@ export const theme = createTheme({
           },
         }),
         icon: ({ theme }) => ({
-          fill: theme.palette.primary.dim,
+          fill: theme.palette.primary.light,
         }),
       },
     },
