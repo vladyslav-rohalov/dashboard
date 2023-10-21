@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getAllEnums } from '../../../redux/enums/operations';
+import { useEnum } from '../../../hooks/useEnum';
 import { Container, PageTitle, FiltersBlock } from './addNew.styled';
 import SetCatergory from './setCategory/setCatefory';
 import { Button, FormControl } from '@mui/material';
@@ -34,6 +37,24 @@ export default function AddNew() {
   const [coalWeight, setCoalWeight] = useState(0);
   const [tobaccoWeight, setTobaccoWeight] = useState(0);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllEnums());
+  }, [dispatch]);
+
+  const {
+    bowl_types,
+    brands,
+    colors,
+    error,
+    flavors,
+    hookah_sizes,
+    isLoading,
+    promotions,
+    types,
+  } = useEnum();
+
   const handleAdd = e => {
     e.preventDefault();
     console.log({
@@ -53,77 +74,95 @@ export default function AddNew() {
     <Container>
       <PageTitle>Add new product</PageTitle>
       <SetCatergory handleCategory={e => setCategory(e)} />
-      <FormControl component="form" onSubmit={handleAdd}>
-        <FiltersBlock>
-          <Promotion
-            value={promotion}
-            onChange={value => setPromotion(value)}
-          />
-          <Status value={status} onChange={value => setStatus(value)} />
-          <Brand value={brand} onChange={value => setBrand(value)} />
-          <Price value={price} onChange={value => setPrice(value)} />
-          <Available
-            value={available}
-            onChange={value => setAvailable(value)}
-          />
-          {category === 'hookah' && (
-            <>
-              <Color value={color} onChange={value => setColor(value)} />
-              <HookahSize
-                value={hookahSize}
-                onChange={value => setHookahSize(value)}
-              />
-            </>
-          )}
-          {category === 'accessory' && (
-            <>
-              <Type value={type} onChange={value => setType(value)} />
-              <BowlType
-                value={bowlType}
-                onChange={value => setBowlType(value)}
-              />
-            </>
-          )}
-          {category === 'tobacco' && (
-            <>
-              <TobaccoWeight
-                value={tobaccoWeight}
-                onChange={value => setTobaccoWeight(value)}
-              />
-            </>
-          )}
-          {category === 'coal' && (
-            <>
-              <CoalSize
-                value={coalSize}
-                onChange={value => setCoalSize(value)}
-              />
-              <CoalWeight
-                value={coalWeight}
-                onChange={value => setCoalWeight(value)}
-              />
-            </>
-          )}
-          <Title
-            value={title}
-            onChange={value => setTitle(value)}
-            cat={category}
-            brand={brand}
-            color={color}
-            hookahSize={hookahSize}
-            type={type}
-            bowlType={bowlType}
-          />
-          <Description
-            value={description}
-            onChange={value => setDescription(value)}
-          />
-        </FiltersBlock>
+      {!isLoading && (
+        <FormControl component="form" onSubmit={handleAdd}>
+          <FiltersBlock>
+            <Promotion
+              value={promotion}
+              onChange={value => setPromotion(value)}
+              list={promotions}
+            />
+            <Status value={status} onChange={value => setStatus(value)} />
+            <Brand
+              value={brand}
+              onChange={value => setBrand(value)}
+              list={brands}
+              qwe={isLoading}
+            />
+            <Price value={price} onChange={value => setPrice(value)} />
+            <Available
+              value={available}
+              onChange={value => setAvailable(value)}
+            />
+            {category === 'hookah' && (
+              <>
+                <Color
+                  value={color}
+                  onChange={value => setColor(value)}
+                  list={colors}
+                />
+                <HookahSize
+                  value={hookahSize}
+                  onChange={value => setHookahSize(value)}
+                  list={hookah_sizes}
+                />
+              </>
+            )}
+            {category === 'accessory' && (
+              <>
+                <Type
+                  value={type}
+                  onChange={value => setType(value)}
+                  list={types}
+                />
+                <BowlType
+                  value={bowlType}
+                  onChange={value => setBowlType(value)}
+                  list={bowl_types}
+                />
+              </>
+            )}
+            {category === 'tobacco' && (
+              <>
+                <TobaccoWeight
+                  value={tobaccoWeight}
+                  onChange={value => setTobaccoWeight(value)}
+                />
+              </>
+            )}
+            {category === 'coal' && (
+              <>
+                <CoalSize
+                  value={coalSize}
+                  onChange={value => setCoalSize(value)}
+                />
+                <CoalWeight
+                  value={coalWeight}
+                  onChange={value => setCoalWeight(value)}
+                />
+              </>
+            )}
+            <Title
+              value={title}
+              onChange={value => setTitle(value)}
+              cat={category}
+              brand={brand}
+              color={color}
+              hookahSize={hookahSize}
+              type={type}
+              bowlType={bowlType}
+            />
+            <Description
+              value={description}
+              onChange={value => setDescription(value)}
+            />
+          </FiltersBlock>
 
-        <Button variant="contained" type="submit" sx={{ width: 160, mt: 4 }}>
-          Submit
-        </Button>
-      </FormControl>
+          <Button variant="contained" type="submit" sx={{ width: 160, mt: 4 }}>
+            Submit
+          </Button>
+        </FormControl>
+      )}
     </Container>
   );
 }
