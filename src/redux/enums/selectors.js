@@ -1,0 +1,9 @@
+export const selectTypes = state => state.enums.types;
+export const selectBowl_types = state => state.enums.bowl_types;
+export const selectBrands = state => state.enums.brands;
+export const selectColors = state => state.enums.colors;
+export const selectFlavors = state => state.enums.flavors;
+export const selectHookah_size = state => state.enums.hookah_size;
+export const selectPromotions = state => state.enums.promotions;
+export const selectError = state => state.auth.error;
+export const selectIsLoading = state => state.auth.isLoading;

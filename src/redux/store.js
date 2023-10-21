@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from './auth/slice';
+import enumSlice from './enums/slice';
 import storage from 'redux-persist/lib/storage';
 import {
   persistStore,
@@ -21,6 +22,7 @@ const authPersistConfig = {
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authSlice),
+    enum: enumSlice,
   },
   middleware: getDefaultMiddleware => [
     ...getDefaultMiddleware({
