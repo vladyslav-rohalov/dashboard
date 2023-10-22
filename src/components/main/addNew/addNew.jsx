@@ -12,7 +12,7 @@ import Price from './commonFileds/price/price';
 import Available from './commonFileds/available/available';
 import Title from './commonFileds/title/title';
 import Description from './commonFileds/description/description';
-import Color from './categories/hookah/color';
+import HookahColor from './categories/hookah/color';
 import HookahSize from './categories/hookah/hookahSize';
 import Type from './categories/accessory/type';
 import BowlType from './categories/accessory/bowlType';
@@ -23,7 +23,7 @@ import TobaccoWeight from './categories/tobacco/weight';
 export default function AddNew() {
   const [category, setCategory] = useState('hookah');
   const [status, setStatus] = useState('in stock');
-  const [promotion, setPromotion] = useState('none');
+  const [promotion, setPromotion] = useState(null);
   const [brand, setBrand] = useState(null);
   const [price, setPrice] = useState(0);
   const [available, setAvailable] = useState(0);
@@ -77,12 +77,12 @@ export default function AddNew() {
       {!isLoading && (
         <FormControl component="form" onSubmit={handleAdd}>
           <FiltersBlock>
+            <Status value={status} onChange={value => setStatus(value)} />
             <Promotion
               value={promotion}
               onChange={value => setPromotion(value)}
               list={promotions}
             />
-            <Status value={status} onChange={value => setStatus(value)} />
             <Brand
               value={brand}
               onChange={value => setBrand(value)}
@@ -96,7 +96,7 @@ export default function AddNew() {
             />
             {category === 'hookah' && (
               <>
-                <Color
+                <HookahColor
                   value={color}
                   onChange={value => setColor(value)}
                   list={colors}

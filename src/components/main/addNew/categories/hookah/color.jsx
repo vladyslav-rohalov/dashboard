@@ -1,68 +1,29 @@
-import { Autocomplete, createFilterOptions } from '@mui/material';
-import { Input } from '../../addNew.styled';
+import { useDispatch } from 'react-redux';
+import { addColor } from '../../../../../redux/enums/operations';
+import AutocompleteBase from '../../autocomplete/autocomplete';
 
-export default function Color({ value, onChange }) {
-  const filter = createFilterOptions();
+export default function HookahColor({ value, onChange, list }) {
+  const dispatch = useDispatch();
 
-  const addNewcolor = newcolor => {
-    console.log('newColor: ', newcolor);
+  const addNewColor = newColor => {
+    const color = newColor.split(',');
+    dispatch(addColor({ color: color[0], color_value: color[1] }));
   };
 
+  const listMod = list.map(val => {
+    const { color, color_value, ...rest } = val;
+    return { ...rest, color: `${color}, ${color_value}` };
+  });
+
   return (
-    <Autocomplete
+    <AutocompleteBase
       value={value}
-      onChange={(e, newValue) => {
-        if (typeof newValue === 'string') {
-          onChange(newValue);
-        } else if (newValue && newValue.inputValue) {
-          addNewcolor(newValue.inputValue);
-          onChange({ color: newValue.inputValue });
-        } else {
-          onChange(newValue);
-        }
-      }}
-      filterOptions={(options, params) => {
-        const filtered = filter(options, params);
-
-        const { inputValue } = params;
-        const isExisting = options.some(option => inputValue === option.color);
-        if (inputValue !== '' && !isExisting) {
-          filtered.push({
-            inputValue,
-            color: `Add "${inputValue}"`,
-          });
-        }
-
-        return filtered;
-      }}
-      selectOnFocus
-      clearOnBlur
-      handleHomeEndKeys
-      id="colors"
-      options={colorList}
-      getOptionLabel={option => {
-        if (typeof option === 'string') {
-          return option;
-        }
-        if (option.inputValue) {
-          return option.inputValue;
-        }
-        return option.color;
-      }}
-      renderOption={(props, option) => <li {...props}>{option.color}</li>}
-      freeSolo
-      renderInput={params => (
-        <Input {...params} label="color" width={300} required />
-      )}
+      onChange={onChange}
+      list={listMod}
+      addNew={addNewColor}
+      field={'color'}
+      label={'Hookah color'}
+      width={300}
     />
   );
 }
-
-const colorList = [
-  { color: 'red, #FFFFFF' },
-  { color: 'white, #FFFFFF' },
-  { color: 'black, #FFFFFF' },
-  { color: 'blue, #FFFFFF' },
-  { color: 'yellow, #FFFFFF' },
-  { color: 'green, #FFFFFF' },
-];

@@ -15,23 +15,10 @@ export const getAllEnums = createAsyncThunk('enums', async (_, thunkAPI) => {
   }
 });
 
-export const addBrand = createAsyncThunk('brand', async (data, thunkAPI) => {
-  try {
-    const response = await axios.post('api/enum/brand', data);
-    return response.data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue({
-      message: e.response.data.message,
-      status: e.response.status,
-    });
-  }
-});
-
-export const addPromotion = createAsyncThunk(
-  'promotion',
-  async (data, thunkAPI) => {
+const createAsyncEnumThunk = (type, url) => {
+  return createAsyncThunk(type, async (data, thunkAPI) => {
     try {
-      const response = await axios.post('api/enum/promotion', data);
+      const response = await axios.post(`api/enum/${url}`, data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue({
@@ -39,74 +26,16 @@ export const addPromotion = createAsyncThunk(
         status: e.response.status,
       });
     }
-  }
-);
+  });
+};
 
-export const addBowlType = createAsyncThunk(
-  'bowl-type',
-  async (data, thunkAPI) => {
-    try {
-      const response = await axios.post('api/enum/bowl-type', data);
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue({
-        message: e.response.data.message,
-        status: e.response.status,
-      });
-    }
-  }
-);
-
-export const addColor = createAsyncThunk('color', async (data, thunkAPI) => {
-  try {
-    const response = await axios.post('api/enum/color', data);
-    return response.data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue({
-      message: e.response.data.message,
-      status: e.response.status,
-    });
-  }
-});
-
-export const addHookahSize = createAsyncThunk(
-  'hookah-size',
-  async (data, thunkAPI) => {
-    try {
-      const response = await axios.post('api/enum/hookah-size', data);
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue({
-        message: e.response.data.message,
-        status: e.response.status,
-      });
-    }
-  }
-);
-
-export const addFlavor = createAsyncThunk('flavor', async (data, thunkAPI) => {
-  try {
-    const response = await axios.post('api/enum/flavor', data);
-    return response.data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue({
-      message: e.response.data.message,
-      status: e.response.status,
-    });
-  }
-});
-
-export const addAccessoryType = createAsyncThunk(
+export const addBrand = createAsyncEnumThunk('brand', 'brand');
+export const addPromotion = createAsyncEnumThunk('promotion', 'promotion');
+export const addBowlType = createAsyncEnumThunk('bowl-type', 'bowl-type');
+export const addColor = createAsyncEnumThunk('color', 'color');
+export const addHookahSize = createAsyncEnumThunk('hookah-size', 'hookah-size');
+export const addFlavor = createAsyncEnumThunk('flavor', 'flavor');
+export const addAccessoryType = createAsyncEnumThunk(
   'accessory-type',
-  async (data, thunkAPI) => {
-    try {
-      const response = await axios.post('api/enum/accessory-type', data);
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue({
-        message: e.response.data.message,
-        status: e.response.status,
-      });
-    }
-  }
+  'accessory-type'
 );

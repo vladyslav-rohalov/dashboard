@@ -35,97 +35,33 @@ export const enumSlice = createSlice({
         state.enums = action.payload;
         state.isLoading = false;
         state.error = null;
-      })
-
-      .addCase(addBrand.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(addBrand.rejected, (state, action) => {
-        state.error = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(addBrand.fulfilled, (state, action) => {
-        state.enums.brands.push(action.payload);
-        state.isLoading = false;
-        state.error = null;
-      })
-
-      .addCase(addAccessoryType.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(addAccessoryType.rejected, (state, action) => {
-        state.error = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(addAccessoryType.fulfilled, (state, action) => {
-        state.enums.types.push(action.payload);
-        state.isLoading = false;
-        state.error = null;
-      })
-
-      .addCase(addBowlType.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(addBowlType.rejected, (state, action) => {
-        state.error = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(addBowlType.fulfilled, (state, action) => {
-        state.enums.bowl_types.push(action.payload);
-        state.isLoading = false;
-        state.error = null;
-      })
-      .addCase(addHookahSize.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(addHookahSize.rejected, (state, action) => {
-        state.error = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(addHookahSize.fulfilled, (state, action) => {
-        state.enums.hookah_size.push(action.payload);
-        state.isLoading = false;
-        state.error = null;
-      })
-
-      .addCase(addColor.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(addColor.rejected, (state, action) => {
-        state.error = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(addColor.fulfilled, (state, action) => {
-        state.enums.colors.push(action.payload);
-        state.isLoading = false;
-        state.error = null;
-      })
-
-      .addCase(addFlavor.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(addFlavor.rejected, (state, action) => {
-        state.error = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(addFlavor.fulfilled, (state, action) => {
-        state.enums.flavors.push(action.payload);
-        state.isLoading = false;
-        state.error = null;
-      })
-
-      .addCase(addPromotion.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(addPromotion.rejected, (state, action) => {
-        state.error = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(addPromotion.fulfilled, (state, action) => {
-        state.enums.promotions.push(action.payload);
-        state.isLoading = false;
-        state.error = null;
       });
+
+    const asyncOperations = [
+      { thunk: addBrand, key: 'brands' },
+      { thunk: addAccessoryType, key: 'types' },
+      { thunk: addBowlType, key: 'bowl_types' },
+      { thunk: addHookahSize, key: 'hookah_size' },
+      { thunk: addColor, key: 'colors' },
+      { thunk: addFlavor, key: 'flavors' },
+      { thunk: addPromotion, key: 'promotions' },
+    ];
+
+    asyncOperations.forEach(({ thunk, key }) => {
+      builder
+        .addCase(thunk.pending, state => {
+          state.isLoading = true;
+        })
+        .addCase(thunk.rejected, (state, action) => {
+          state.error = action.payload;
+          state.isLoading = false;
+        })
+        .addCase(thunk.fulfilled, (state, action) => {
+          state.enums[key].push(action.payload);
+          state.isLoading = false;
+          state.error = null;
+        });
+    });
   },
 });
 
