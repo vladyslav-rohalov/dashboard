@@ -11,6 +11,10 @@ export default function Title({
   hookahSize,
   type,
   bowlType,
+  flavor,
+  tobaccoWeight,
+  coalSize,
+  coalWeight,
 }) {
   const getColor = () => {
     if (color) {
@@ -22,28 +26,36 @@ export default function Title({
 
   const tColor = color ? `, ${getColor()} color` : '';
   const tBrand = brand === null ? '' : brand.brand;
-  const tHookahSize = hookahSize === null ? '' : `, ${hookahSize.size}`;
+  const tHookahSize = hookahSize === null ? '' : `, ${hookahSize.hookah_size}`;
   const tType = type ? `Hookah ${type.type} ` : '';
-  const tBowlType = bowlType ? `, ${bowlType.bowlType} type ` : '';
+  const tBowlType = bowlType ? `, ${bowlType.bowl_type} type ` : '';
+  const tFlavor = flavor === null ? '' : `, ${flavor.flavor}`;
+  const tTobaccoWeight = tobaccoWeight === '' ? '' : `, ${tobaccoWeight}g`;
+  const tCoalSize = coalSize === '' ? '' : `, ${coalSize}mm`;
+  const tCoalWeight = coalWeight === '' ? '' : `, ${coalWeight}g`;
 
   const HookahTitle = () => {
     return cat + ' ' + tBrand + tHookahSize + tColor;
+  };
+
+  const TobaccoTitle = () => {
+    return cat + ' ' + tBrand + tFlavor + tTobaccoWeight;
+  };
+
+  const CoalTitle = () => {
+    return cat + ' ' + tBrand + tCoalSize + tCoalWeight;
   };
 
   const AccessoriesTitle = () => {
     return tType + tBrand + tBowlType;
   };
 
-  const TobaccoTitle = () => {};
-
-  const CoalTitle = () => {};
-
   const CheckCat = () => {
     switch (cat) {
       case 'hookah': {
         return HookahTitle();
       }
-      case 'accessory': {
+      case 'accessories': {
         return AccessoriesTitle();
       }
       case 'tobacco': {
@@ -59,7 +71,6 @@ export default function Title({
 
   const handleAutogenerate = () => {
     const autoTitle = CheckCat();
-    console.log(autoTitle);
     onChange(autoTitle.toUpperCase());
   };
 

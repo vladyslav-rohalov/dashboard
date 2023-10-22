@@ -11,7 +11,7 @@ export default function Price({ value, onChange }) {
         required
         label="Price"
         id="price"
-        type="number"
+        type="text"
         autoComplete="off"
         value={value}
         onChange={e => onChange(+e.target.value)}

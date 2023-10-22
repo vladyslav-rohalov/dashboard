@@ -3,7 +3,7 @@ import { Input } from '../../addNew.styled';
 
 export default function Description({ value, onChange }) {
   return (
-    <FormControl sx={{ width: '100%', height: '200px' }}>
+    <FormControl sx={{ width: '100%' }}>
       <Input
         // err={errors?.email}
         mt={0}

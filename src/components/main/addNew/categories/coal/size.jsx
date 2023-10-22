@@ -11,7 +11,7 @@ export default function CoalSize({ value, onChange }) {
         required
         label="Size"
         id="size"
-        type="number"
+        type="text"
         autoComplete="off"
         value={value}
         onChange={e => onChange(+e.target.value)}

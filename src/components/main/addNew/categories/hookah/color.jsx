@@ -7,7 +7,9 @@ export default function HookahColor({ value, onChange, list }) {
 
   const addNewColor = newColor => {
     const color = newColor.split(',');
-    dispatch(addColor({ color: color[0], color_value: color[1] }));
+    dispatch(
+      addColor({ color: color[0].trim(), color_value: color[1].trim() })
+    );
   };
 
   const listMod = list.map(val => {

@@ -10,8 +10,8 @@ export default function TobaccoWeight({ value, onChange }) {
         width={200}
         required
         label="Weight"
-        id="weight"
-        type="number"
+        id="tobacco_weight"
+        type="text"
         autoComplete="off"
         value={value}
         onChange={e => onChange(+e.target.value)}

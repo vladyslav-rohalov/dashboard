@@ -15,9 +15,9 @@ export default function SetCatergory({ handleCategory }) {
         <FormControlLabel value="tobacco" control={<Radio />} label="Tobacco" />
         <FormControlLabel value="coal" control={<Radio />} label="Coal" />
         <FormControlLabel
-          value="accessory"
+          value="accessories"
           control={<Radio />}
-          label="Accessory"
+          label="Accessories"
         />
       </RadioGroup>
     </FormControl>

@@ -1,22 +1,23 @@
-import { FormControl, InputLabel, Select } from '@mui/material';
-import { MenuItem } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { addBowlType } from '../../../../../redux/enums/operations';
+import AutocompleteBase from '../../autocomplete/autocomplete';
 
-export default function BowlType({ value, onChange }) {
+export default function BowlType({ value, onChange, list }) {
+  const dispatch = useDispatch();
+
+  const addNewBowlType = newBowlType => {
+    dispatch(addBowlType({ bowl_type: newBowlType }));
+  };
+
   return (
-    <FormControl sx={{ width: 200 }}>
-      <InputLabel id="bowl-type-label">Bowl type</InputLabel>
-      <Select
-        name="bowl-type"
-        label="Bowl type"
-        value={value}
-        onChange={e => onChange(e.target.value)}
-      >
-        <MenuItem value={null}>None</MenuItem>
-        <MenuItem value={'turkish'}>Turkish</MenuItem>
-        <MenuItem value={'phunnel'}>Phunnel</MenuItem>
-        <MenuItem value={'vortex'}>Vortex</MenuItem>
-        <MenuItem value={'evil'}>Evil</MenuItem>
-      </Select>
-    </FormControl>
+    <AutocompleteBase
+      value={value}
+      onChange={onChange}
+      list={list}
+      addNew={addNewBowlType}
+      field={'bowl_type'}
+      label={'Bowl type'}
+      width={300}
+    />
   );
 }

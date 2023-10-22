@@ -11,7 +11,7 @@ export default function Available({ value, onChange }) {
         required
         label="Available"
         id="available"
-        type="number"
+        type="text"
         autoComplete="off"
         value={value}
         onChange={e => onChange(+e.target.value)}
