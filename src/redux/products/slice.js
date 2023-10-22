@@ -3,6 +3,7 @@ import { getAllProducts, addHookah, addAccessory } from './operations';
 import { addCoal, addTobacco } from './operations';
 
 const initialState = {
+  response: null,
   products: [],
   hookahs: [],
   tobacco: [],
@@ -32,13 +33,13 @@ export const productsSlice = createSlice({
       });
 
     const asyncOperations = [
-      { thunk: addHookah, key: 'hookahs' },
-      { thunk: addAccessory, key: 'accessories' },
-      { thunk: addCoal, key: 'coals' },
-      { thunk: addTobacco, key: 'tobacco' },
+      { thunk: addHookah },
+      { thunk: addAccessory },
+      { thunk: addCoal },
+      { thunk: addTobacco },
     ];
 
-    asyncOperations.forEach(({ thunk, key }) => {
+    asyncOperations.forEach(({ thunk }) => {
       builder
         .addCase(thunk.pending, state => {
           state.isLoading = true;
@@ -48,7 +49,7 @@ export const productsSlice = createSlice({
           state.isLoading = false;
         })
         .addCase(thunk.fulfilled, (state, action) => {
-          state[key].push(action.payload);
+          state.response = action.payload;
           state.isLoading = false;
           state.error = null;
         });

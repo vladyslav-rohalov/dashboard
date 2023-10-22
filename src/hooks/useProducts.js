@@ -1,25 +1,27 @@
 import { useSelector } from 'react-redux';
-import { selectAccesseries, selectCoals } from '../redux/products/selectors';
+import { selectAccessories, selectCoals } from '../redux/products/selectors';
 import { selectError, selectHookahs } from '../redux/products/selectors';
 import { selectIsLoading, selectProducts } from '../redux/products/selectors';
-import { selectTobacco } from '../redux/products/selectors';
+import { selectTobacco, selectResponse } from '../redux/products/selectors';
 
 export const useProducts = () => {
-  const hookahs = useSelector(selectHookahs);
+  const hookah = useSelector(selectHookahs);
   const tobacco = useSelector(selectTobacco);
-  const coals = useSelector(selectCoals);
-  const accessories = useSelector(selectAccesseries);
+  const coal = useSelector(selectCoals);
+  const accessory = useSelector(selectAccessories);
   const products = useSelector(selectProducts);
   const error = useSelector(selectError);
   const isLoading = useSelector(selectIsLoading);
+  const response = useSelector(selectResponse);
 
   return {
-    hookahs,
+    hookah,
     tobacco,
-    coals,
-    accessories,
+    coal,
+    accessory,
     products,
     error,
     isLoading,
+    response,
   };
 };

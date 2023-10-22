@@ -24,7 +24,7 @@ import Strength from '../categories/tobacco/strength';
 import Flavor from '../categories/tobacco/flavor';
 import { FiltersBlock } from '../addNew.styled';
 
-export default function AddDetails() {
+export default function AddDetails({ onSuccess }) {
   const [category, setCategory] = useState('hookah');
   const [status, setStatus] = useState('in stock');
   const [strength, setStrength] = useState('none');
@@ -55,10 +55,10 @@ export default function AddDetails() {
       promotion: promotion?.promotion,
       brand: brand?.brand,
       status,
-      price,
+      price: +price,
       description,
       title,
-      available,
+      available: +available,
     };
     if (category === 'hookah') {
       const data = {
@@ -73,7 +73,7 @@ export default function AddDetails() {
       const data = {
         ...commonData,
         flavor: flavor?.flavor,
-        tobacco_weight: tobaccoWeight,
+        tobacco_weight: +tobaccoWeight,
         strength: strength === 'none' ? null : strength,
       };
       dispatch(addTobacco(data));
@@ -82,8 +82,8 @@ export default function AddDetails() {
     if (category === 'coal') {
       const data = {
         ...commonData,
-        coal_size: coalSize,
-        coal_weight: coalWeight,
+        coal_size: +coalSize,
+        coal_weight: +coalWeight,
       };
       dispatch(addCoal(data));
       console.log(data);
@@ -97,13 +97,13 @@ export default function AddDetails() {
       dispatch(addAccessory(data));
       console.log(data);
     }
+    onSuccess();
   };
 
   const {
     bowl_types,
     brands,
     colors,
-    error,
     flavors,
     hookah_sizes,
     isLoading,

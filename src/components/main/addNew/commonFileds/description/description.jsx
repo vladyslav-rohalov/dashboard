@@ -5,7 +5,6 @@ export default function Description({ value, onChange }) {
   return (
     <FormControl sx={{ width: '100%' }}>
       <Input
-        // err={errors?.email}
         mt={0}
         width={'100%'}
         required
@@ -23,16 +22,6 @@ export default function Description({ value, onChange }) {
           },
         }}
       />
-
-      {/* {errors?.price && (
-                <OnError
-                  text={
-                    errors?.email?.message
-                      ? errors.email.message
-                      : 'Invalid email or password'
-                  }
-                />
-              )} */}
     </FormControl>
   );
 }

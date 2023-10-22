@@ -5,7 +5,6 @@ export default function TobaccoWeight({ value, onChange }) {
   return (
     <FormControl>
       <Input
-        // err={errors?.email}
         mt={0}
         width={200}
         required
@@ -16,15 +15,6 @@ export default function TobaccoWeight({ value, onChange }) {
         value={value}
         onChange={e => onChange(+e.target.value)}
       />
-      {/* {errors?.price && (
-        <OnError
-          text={
-            errors?.email?.message
-              ? errors.email.message
-              : 'Invalid email or password'
-          }
-        />
-      )} */}
     </FormControl>
   );
 }

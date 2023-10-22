@@ -5,7 +5,6 @@ export default function Price({ value, onChange }) {
   return (
     <FormControl>
       <Input
-        // err={errors?.email}
         mt={0}
         width={200}
         required
@@ -14,17 +13,8 @@ export default function Price({ value, onChange }) {
         type="text"
         autoComplete="off"
         value={value}
-        onChange={e => onChange(+e.target.value)}
+        onChange={e => onChange(e.target.value)}
       />
-      {/* {errors?.price && (
-        <OnError
-          text={
-            errors?.email?.message
-              ? errors.email.message
-              : 'Invalid email or password'
-          }
-        />
-      )} */}
     </FormControl>
   );
 }
