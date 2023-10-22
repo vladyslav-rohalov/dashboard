@@ -22,3 +22,6 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* Throw ResizeObserver loop completed with undelivered notifications ERROR */
+iframe#webpack-dev-server-client-overlay{display:none!important}

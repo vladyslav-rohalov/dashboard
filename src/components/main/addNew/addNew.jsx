@@ -7,12 +7,12 @@ import AddPhoto from './addPhoto/addPhoto';
 import AlertNotify from '../../onError/alert';
 
 export default function AddNew() {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
   const { error, isLoading, response } = useProducts();
 
-  useEffect(() => {
-    console.log(response);
-  }, [response]);
+  // useEffect(() => {
+  //   console.log(response);
+  // }, [response]);
 
   const handleStep = () => {
     if (!error) {

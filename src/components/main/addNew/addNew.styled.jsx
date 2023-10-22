@@ -1,12 +1,13 @@
 import { styled } from '@mui/material/styles';
 import { Box, Typography, TextField } from '@mui/material';
 
-export const Container = styled(Box)(({ theme }) => ({
+export const Container = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   width: 'calc(100% - 400px)',
   padding: '16px 32px',
-}));
+  marginLeft: 400,
+});
 
 export const FiltersBlock = styled(Box)({
   display: 'flex',

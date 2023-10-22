@@ -1,4 +1,6 @@
 import { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { addImages } from '../../../../redux/products/operations';
 import { rotateImage } from '../../../../lib/rotateImage';
 import { Container, MainBlock, ImagesBlock } from './addPhoto.styled';
 import { ImageBlock, IconDelete, IconRotate } from './addPhoto.styled';
@@ -8,6 +10,7 @@ import { IconImage, Text } from './addPhoto.styled';
 export default function AddPhoto({ id }) {
   const [fileList, setFileList] = useState([]);
   const imagePicker = useRef(null);
+  const dispatch = useDispatch();
 
   const handlePick = () => {
     imagePicker.current.click();
@@ -36,9 +39,16 @@ export default function AddPhoto({ id }) {
         console.error('rotate error', error);
       });
   };
+
+  const handleAddImages = () => {
+    if (fileList.length) {
+      dispatch(addImages({ id, images: fileList }));
+    }
+  };
+
   return (
     <>
-      <Container>
+      <Container component={'section'}>
         <MainBlock>
           <Text>Upload images for the product</Text>
 
@@ -70,8 +80,9 @@ export default function AddPhoto({ id }) {
                   <img
                     src={URL.createObjectURL(image)}
                     alt="product"
-                    width={120}
-                    height={120}
+                    width={'100%'}
+                    height={216}
+                    style={{ objectFit: 'contain' }}
                   />
                   <IconDelete onClick={() => removeImage(image.name)} />
                   <IconRotate onClick={() => handleRotateRight(image)} />
@@ -81,7 +92,13 @@ export default function AddPhoto({ id }) {
           </ImagesBlock>
         )}
       </Container>
-      <SubmitButton variant="contained">Add images</SubmitButton>
+      <SubmitButton
+        variant="contained"
+        onClick={handleAddImages}
+        disabled={fileList.length ? false : true}
+      >
+        Add images
+      </SubmitButton>
     </>
   );
 }

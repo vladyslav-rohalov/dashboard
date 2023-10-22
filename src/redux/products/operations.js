@@ -18,6 +18,21 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
+export const addImages = createAsyncThunk(
+  'add/images',
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.get(`api/products/${data.id}`, data.images);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: e.response.data.message,
+        status: e.response.status,
+      });
+    }
+  }
+);
+
 const createAsyncCommonThunk = (type, url, method) => {
   return createAsyncThunk(type, async (data, thunkAPI) => {
     try {
@@ -53,26 +68,26 @@ export const addAccessory = createAsyncCommonThunk(
   'post'
 );
 
-export const getHookahs = createAsyncCommonThunk(
-  'get/hookahs',
-  'products/hookahs',
-  'get'
-);
+// export const getHookahs = createAsyncCommonThunk(
+//   'get/hookahs',
+//   'products/hookahs',
+//   'get'
+// );
 
-export const getTobacco = createAsyncCommonThunk(
-  'get/tobacco',
-  'products/tobacco',
-  'get'
-);
+// export const getTobacco = createAsyncCommonThunk(
+//   'get/tobacco',
+//   'products/tobacco',
+//   'get'
+// );
 
-export const getCoals = createAsyncCommonThunk(
-  'get/coals',
-  'products/coals',
-  'get'
-);
+// export const getCoals = createAsyncCommonThunk(
+//   'get/coals',
+//   'products/coals',
+//   'get'
+// );
 
-export const getAccessories = createAsyncCommonThunk(
-  'get/accessories',
-  'products/accessories',
-  'get'
-);
+// export const getAccessories = createAsyncCommonThunk(
+//   'get/accessories',
+//   'products/accessories',
+//   'get'
+// );

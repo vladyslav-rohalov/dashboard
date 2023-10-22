@@ -8,7 +8,11 @@ export default function App() {
   return (
     <>
       <RefreshUser />
-      {isLogin && !isLoading ? <Main user={user} /> : <Login />}
+      {isLogin && !isLoading ? (
+        <Main user={user} />
+      ) : (
+        <>{!isLoading && <Login />}</>
+      )}
     </>
   );
 }

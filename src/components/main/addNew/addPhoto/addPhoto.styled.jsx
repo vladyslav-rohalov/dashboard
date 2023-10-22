@@ -26,6 +26,7 @@ export const MainBlock = styled(Box)({
 export const ImagesBlock = styled(Box)({
   display: 'flex',
   flexDirection: 'row',
+  justifyContent: 'center',
   flexWrap: 'wrap',
   gap: 16,
   listStyle: 'none',

@@ -2,11 +2,13 @@ import { styled } from '@mui/material/styles';
 import { Box, Typography, Tab } from '@mui/material';
 
 export const Container = styled(Box)(({ theme }) => ({
+  position: 'fixed',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
   backgroundColor: theme.palette.primary.main,
   width: '400px',
+  height: '100%',
   padding: '16px 0 16px 16px',
 }));
 
