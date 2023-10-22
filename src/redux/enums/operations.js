@@ -15,10 +15,10 @@ export const getAllEnums = createAsyncThunk('enums', async (_, thunkAPI) => {
   }
 });
 
-const createAsyncEnumThunk = (type, url) => {
+const createAsyncCommonThunk = (type, url) => {
   return createAsyncThunk(type, async (data, thunkAPI) => {
     try {
-      const response = await axios.post(`api/enum/${url}`, data);
+      const response = await axios.post(`api/${url}`, data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue({
@@ -29,13 +29,22 @@ const createAsyncEnumThunk = (type, url) => {
   });
 };
 
-export const addBrand = createAsyncEnumThunk('brand', 'brand');
-export const addPromotion = createAsyncEnumThunk('promotion', 'promotion');
-export const addBowlType = createAsyncEnumThunk('bowl-type', 'bowl-type');
-export const addColor = createAsyncEnumThunk('color', 'color');
-export const addHookahSize = createAsyncEnumThunk('hookah-size', 'hookah-size');
-export const addFlavor = createAsyncEnumThunk('flavor', 'flavor');
-export const addAccessoryType = createAsyncEnumThunk(
+export const addBrand = createAsyncCommonThunk('brand', 'enum/brand');
+export const addPromotion = createAsyncCommonThunk(
+  'promotion',
+  'enum/promotion'
+);
+export const addBowlType = createAsyncCommonThunk(
+  'bowl-type',
+  'enum/bowl-type'
+);
+export const addColor = createAsyncCommonThunk('color', 'enum/color');
+export const addHookahSize = createAsyncCommonThunk(
+  'hookah-size',
+  'enum/hookah-size'
+);
+export const addFlavor = createAsyncCommonThunk('flavor', 'enum/flavor');
+export const addAccessoryType = createAsyncCommonThunk(
   'accessory-type',
-  'accessory-type'
+  'enum/accessory-type'
 );

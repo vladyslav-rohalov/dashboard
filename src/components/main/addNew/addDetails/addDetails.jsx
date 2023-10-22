@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAllEnums } from '../../../../redux/enums/operations';
+import { addHookah, addTobacco } from '../../../../redux/products/operations';
+import { addCoal, addAccessory } from '../../../../redux/products/operations';
 import { useEnum } from '../../../../hooks/useEnum';
 import { Button, FormControl } from '@mui/material';
 import SetCatergory from '../setCategory/setCatefory';
@@ -62,8 +64,9 @@ export default function AddDetails() {
       const data = {
         ...commonData,
         color: color?.color,
-        hookahSize: hookahSize?.hookah_size,
+        hookah_size: hookahSize?.hookah_size,
       };
+      dispatch(addHookah(data));
       console.log(data);
     }
     if (category === 'tobacco') {
@@ -73,6 +76,7 @@ export default function AddDetails() {
         tobacco_weight: tobaccoWeight,
         strength: strength === 'none' ? null : strength,
       };
+      dispatch(addTobacco(data));
       console.log(data);
     }
     if (category === 'coal') {
@@ -81,6 +85,7 @@ export default function AddDetails() {
         coal_size: coalSize,
         coal_weight: coalWeight,
       };
+      dispatch(addCoal(data));
       console.log(data);
     }
     if (category === 'accessories') {
@@ -89,6 +94,7 @@ export default function AddDetails() {
         type: type?.type,
         bowl_type: bowlType?.bowl_type,
       };
+      dispatch(addAccessory(data));
       console.log(data);
     }
   };

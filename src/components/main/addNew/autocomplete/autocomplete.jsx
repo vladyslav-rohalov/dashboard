@@ -9,6 +9,7 @@ export default function AutocompleteBase({
   field,
   value,
   onChange,
+  required = true,
 }) {
   const filter = createFilterOptions();
   return (
@@ -55,7 +56,7 @@ export default function AutocompleteBase({
       renderOption={(props, option) => <li {...props}>{option[field]}</li>}
       freeSolo
       renderInput={params => (
-        <Input {...params} label={label} width={width} required />
+        <Input {...params} label={label} width={width} required={required} />
       )}
     />
   );

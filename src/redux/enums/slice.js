@@ -13,7 +13,6 @@ const initialState = {
     hookah_size: [],
     promotions: [],
   },
-  isLogin: false,
   error: null,
   isLoading: false,
 };

@@ -18,6 +18,7 @@ export default function BowlType({ value, onChange, list }) {
       field={'bowl_type'}
       label={'Bowl type'}
       width={300}
+      required={false}
     />
   );
 }
