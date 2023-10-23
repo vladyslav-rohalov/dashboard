@@ -67,7 +67,6 @@ export default function AddDetails({ onSuccess }) {
         hookah_size: hookahSize?.hookah_size,
       };
       dispatch(addHookah(data));
-      console.log(data);
     }
     if (category === 'tobacco') {
       const data = {
@@ -77,7 +76,6 @@ export default function AddDetails({ onSuccess }) {
         strength: strength === 'none' ? null : strength,
       };
       dispatch(addTobacco(data));
-      console.log(data);
     }
     if (category === 'coal') {
       const data = {
@@ -86,7 +84,6 @@ export default function AddDetails({ onSuccess }) {
         coal_weight: +coalWeight,
       };
       dispatch(addCoal(data));
-      console.log(data);
     }
     if (category === 'accessories') {
       const data = {
@@ -95,7 +92,6 @@ export default function AddDetails({ onSuccess }) {
         bowl_type: bowlType?.bowl_type,
       };
       dispatch(addAccessory(data));
-      console.log(data);
     }
     onSuccess();
   };

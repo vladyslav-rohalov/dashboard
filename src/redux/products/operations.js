@@ -20,9 +20,32 @@ export const getAllProducts = createAsyncThunk(
 
 export const addImages = createAsyncThunk(
   'add/images',
-  async (data, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
-      const response = await axios.get(`api/products/${data.id}`, data.images);
+      const response = await axios.post(
+        `api/products/images/${formData.get('id')}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: e.response.data.message,
+        status: e.response.status,
+      });
+    }
+  }
+);
+
+export const publishProduct = createAsyncThunk(
+  'publich/product',
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.patch(`api/products/publish/${id}`);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue({

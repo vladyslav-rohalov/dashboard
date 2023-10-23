@@ -224,5 +224,10 @@ export const theme = createTheme({
         }),
       },
     },
+    MuiRating: {
+      styleOverrides: {
+        iconEmpty: ({ theme }) => ({ color: theme.palette.primary.dim }),
+      },
+    },
   },
 });

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getAllProducts, addHookah, addAccessory } from './operations';
-import { addCoal, addTobacco, addImages } from './operations';
+import { addCoal, addTobacco, addImages, publishProduct } from './operations';
 
 const initialState = {
   response: null,
@@ -38,6 +38,7 @@ export const productsSlice = createSlice({
       { thunk: addCoal },
       { thunk: addTobacco },
       { thunk: addImages },
+      { thunk: publishProduct },
     ];
 
     asyncOperations.forEach(({ thunk }) => {

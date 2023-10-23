@@ -1,23 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useProducts } from '../../../hooks/useProducts';
 import { Container, PageTitle } from './addNew.styled';
 import HorizontalStepper from './stepper/stepper';
 import AddDetails from './addDetails/addDetails';
 import AddPhoto from './addPhoto/addPhoto';
 import AlertNotify from '../../onError/alert';
+import Result from './result/result';
 
 export default function AddNew() {
   const [activeStep, setActiveStep] = useState(0);
   const { error, isLoading, response } = useProducts();
 
-  // useEffect(() => {
-  //   console.log(response);
-  // }, [response]);
-
   const handleStep = () => {
-    if (!error) {
-      setActiveStep(activeStep + 1);
-    }
+    if (error) return;
+    setActiveStep(activeStep + 1);
   };
 
   return (
@@ -26,7 +22,12 @@ export default function AddNew() {
       <HorizontalStepper activeStep={activeStep} />
       {error && <AlertNotify error={error} />}
       {activeStep === 0 && <AddDetails onSuccess={handleStep} />}
-      {activeStep === 1 && <AddPhoto />}
+      {activeStep === 1 && !isLoading && (
+        <AddPhoto onSuccess={handleStep} id={response?.id} />
+      )}
+      {activeStep === 2 && !isLoading && (
+        <Result onSuccess={() => setActiveStep(0)} product={response} />
+      )}
     </Container>
   );
 }

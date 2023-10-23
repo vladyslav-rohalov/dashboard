@@ -7,7 +7,7 @@ import { ImageBlock, IconDelete, IconRotate } from './addPhoto.styled';
 import { SubmitButton, UploadButton, Input } from './addPhoto.styled';
 import { IconImage, Text } from './addPhoto.styled';
 
-export default function AddPhoto({ id }) {
+export default function AddPhoto({ id, onSuccess }) {
   const [fileList, setFileList] = useState([]);
   const imagePicker = useRef(null);
   const dispatch = useDispatch();
@@ -42,8 +42,14 @@ export default function AddPhoto({ id }) {
 
   const handleAddImages = () => {
     if (fileList.length) {
-      dispatch(addImages({ id, images: fileList }));
+      const formData = new FormData();
+      fileList.forEach(file => {
+        formData.append(`images`, file);
+      });
+      formData.append('id', id);
+      dispatch(addImages(formData));
     }
+    onSuccess();
   };
 
   return (
@@ -92,11 +98,7 @@ export default function AddPhoto({ id }) {
           </ImagesBlock>
         )}
       </Container>
-      <SubmitButton
-        variant="contained"
-        onClick={handleAddImages}
-        disabled={fileList.length ? false : true}
-      >
+      <SubmitButton variant="contained" onClick={handleAddImages}>
         Add images
       </SubmitButton>
     </>
