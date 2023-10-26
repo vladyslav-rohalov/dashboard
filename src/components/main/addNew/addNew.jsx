@@ -12,7 +12,6 @@ export default function AddNew() {
   const { error, isLoading, response } = useProducts();
 
   const handleStep = () => {
-    if (error) return;
     setActiveStep(activeStep + 1);
   };
 
@@ -23,7 +22,7 @@ export default function AddNew() {
       {error && <AlertNotify error={error} />}
       {activeStep === 0 && <AddDetails onSuccess={handleStep} />}
       {activeStep === 1 && !isLoading && (
-        <AddPhoto onSuccess={handleStep} id={response?.id} />
+        <AddPhoto onSuccess={handleStep} id={response.id} />
       )}
       {activeStep === 2 && !isLoading && (
         <Result onSuccess={() => setActiveStep(0)} product={response} />

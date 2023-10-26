@@ -40,14 +40,15 @@ export default function AddPhoto({ id, onSuccess }) {
       });
   };
 
-  const handleAddImages = () => {
+  const handleAddImages = async () => {
     if (fileList.length) {
       const formData = new FormData();
       fileList.forEach(file => {
         formData.append(`images`, file);
       });
       formData.append('id', id);
-      dispatch(addImages(formData));
+      const response = await dispatch(addImages(formData));
+      if (response.meta.requestStatus === 'rejected') return;
     }
     onSuccess();
   };

@@ -4,7 +4,7 @@ import CardDescription from './cardDescription/cardDescription';
 import { Card } from './productItem.styled';
 
 export default function ProductItem({ product }) {
-  const { images = [], promotion } = product;
+  const { images, promotion } = product;
 
   const swiperRef = useRef();
 

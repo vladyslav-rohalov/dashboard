@@ -49,7 +49,7 @@ export default function AddDetails({ onSuccess }) {
     dispatch(getAllEnums());
   }, [dispatch]);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const commonData = {
       promotion: promotion?.promotion,
@@ -60,13 +60,15 @@ export default function AddDetails({ onSuccess }) {
       title,
       available: +available,
     };
+
     if (category === 'hookah') {
       const data = {
         ...commonData,
         color: color?.color,
         hookah_size: hookahSize?.hookah_size,
       };
-      dispatch(addHookah(data));
+      const response = await dispatch(addHookah(data));
+      if (response.meta.requestStatus === 'rejected') return;
     }
     if (category === 'tobacco') {
       const data = {
@@ -75,7 +77,8 @@ export default function AddDetails({ onSuccess }) {
         tobacco_weight: +tobaccoWeight,
         strength: strength === 'none' ? null : strength,
       };
-      dispatch(addTobacco(data));
+      const response = await dispatch(addTobacco(data));
+      if (response.meta.requestStatus === 'rejected') return;
     }
     if (category === 'coal') {
       const data = {
@@ -83,7 +86,8 @@ export default function AddDetails({ onSuccess }) {
         coal_size: +coalSize,
         coal_weight: +coalWeight,
       };
-      dispatch(addCoal(data));
+      const response = await dispatch(addCoal(data));
+      if (response.meta.requestStatus === 'rejected') return;
     }
     if (category === 'accessories') {
       const data = {
@@ -91,7 +95,8 @@ export default function AddDetails({ onSuccess }) {
         type: type?.type,
         bowl_type: bowlType?.bowl_type,
       };
-      dispatch(addAccessory(data));
+      const response = await dispatch(addAccessory(data));
+      if (response.meta.requestStatus === 'rejected') return;
     }
     onSuccess();
   };

@@ -9,8 +9,11 @@ import 'swiper/css/autoplay';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
+const defaultImage = require('../../../../../../images/no-image.png');
+
 export default function CardSwiper({ promotion, images, swiperRef }) {
   const color = chipColor(promotion);
+
   return (
     <Container>
       <Swiper
@@ -46,19 +49,31 @@ export default function CardSwiper({ promotion, images, swiperRef }) {
           />
         )}
         <FavoriteIcon />
-        {images.map(image => {
-          return (
-            <SwiperSlide key={image}>
-              <ImageStyled
-                className="scaleImage"
-                src={image}
-                alt="product"
-                width={'100%'}
-                height={'100%'}
-              />
-            </SwiperSlide>
-          );
-        })}
+        {images ? (
+          images.map(image => {
+            return (
+              <SwiperSlide key={image}>
+                <ImageStyled
+                  className="scaleImage"
+                  src={image}
+                  alt="product"
+                  width={'100%'}
+                  height={'100%'}
+                />
+              </SwiperSlide>
+            );
+          })
+        ) : (
+          <SwiperSlide key={'image'}>
+            <ImageStyled
+              className="scaleImage"
+              src={defaultImage}
+              alt="product"
+              width={'100%'}
+              height={'100%'}
+            />
+          </SwiperSlide>
+        )}
       </Swiper>
     </Container>
   );

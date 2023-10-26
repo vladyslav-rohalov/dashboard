@@ -6,8 +6,9 @@ import { Container, ButtonBlock, Button } from './result.styled';
 export default function Result({ product, onSuccess }) {
   const dispatch = useDispatch();
 
-  const handlePublish = () => {
-    dispatch(publishProduct(product.id));
+  const handlePublish = async () => {
+    const response = await dispatch(publishProduct(product.id));
+    if (response.meta.requestStatus === 'rejected') return;
     onSuccess();
   };
 

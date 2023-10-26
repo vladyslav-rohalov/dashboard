@@ -10,26 +10,45 @@ export default function AlertNotify({ error }) {
     updatedMessages.splice(index, 1);
     setMessages(updatedMessages);
   };
+
   return (
     <Stack sx={{ width: '100%', mt: 4 }} spacing={2}>
-      {messages.map((message, index) => (
+      {Array.isArray(messages) ? (
+        messages.map((message, index) => (
+          <Alert
+            key={index}
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => handleClose(index)}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            {message}
+          </Alert>
+        ))
+      ) : (
         <Alert
-          key={index}
           severity="error"
           action={
             <IconButton
               aria-label="close"
               color="inherit"
               size="small"
-              onClick={() => handleClose(index)}
+              onClick={() => setMessages([])}
             >
               <CloseIcon fontSize="inherit" />
             </IconButton>
           }
         >
-          {message}
+          {messages}
         </Alert>
-      ))}
+      )}
     </Stack>
   );
 }
