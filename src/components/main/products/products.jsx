@@ -11,22 +11,46 @@ export default function Products() {
   const [category, setCategory] = useState('all');
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
-  const [searchParams, setSearchParams] = useState(null);
+
+  const dispatch = useDispatch();
 
   const { products = [] } = useProducts();
   const pageCount = products?.total ? Math.ceil(products.total / limit) : 0;
 
-  useEffect(() => {
-    console.log(products.length > 0);
-  }, [products]);
+  const handleFetch = params => {
+    switch (category) {
+      case 'all':
+        dispatch(getAllProducts(params));
+        break;
+      case 'hookah':
+        break;
+      case 'tobacco':
+        break;
+      case 'coal':
+        break;
+      case 'accessories':
+        break;
+      default:
+        dispatch(getAllProducts());
+    }
+  };
 
   return (
     <>
       <PageTitle>Find a Product</PageTitle>
       <SetCatergory handleCategory={val => setCategory(val)} withAll={true} />
-      <SearchFilters category={category} page={page} limit={limit} />
-      {products.products.length > 0 && (
-        <Pagination page={page} pageCount={pageCount} />
+      <SearchFilters
+        category={category}
+        page={page}
+        limit={limit}
+        handleFetch={handleFetch}
+      />
+      {products?.products?.length > 0 && (
+        <Pagination
+          page={page}
+          pageCount={pageCount}
+          onPageChange={p => setPage(p)}
+        />
       )}
     </>
   );

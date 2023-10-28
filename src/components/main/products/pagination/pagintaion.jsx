@@ -3,7 +3,7 @@ import { Stack } from '@mui/material';
 
 export default function Pagination({ page, pageCount, onPageChange }) {
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} sx={{ alignItems: 'center' }}>
       <MuiPagination
         page={page}
         count={pageCount}

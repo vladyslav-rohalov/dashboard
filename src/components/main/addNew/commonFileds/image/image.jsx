@@ -6,14 +6,14 @@ export default function Images({ width = 120, control }) {
   return (
     <Controller
       control={control}
-      name="image"
+      name="images"
       defaultValue={''}
       render={({ field: { onChange, value } }) => {
         return (
           <FormControl sx={{ width: width }}>
             <InputLabel id="status-label">Images</InputLabel>
             <Select
-              name="image"
+              name="images"
               label="Images"
               value={value}
               onChange={e => onChange(e.target.value)}

@@ -1,5 +1,3 @@
-import { useDispatch } from 'react-redux';
-import { getAllProducts } from '../../../../redux/products/operations';
 import { useEnum } from '../../../../hooks/useEnum';
 import { useForm } from 'react-hook-form';
 import { FiltersBlock } from '../../addNew/addNew.styled';
@@ -19,34 +17,37 @@ import BowlType from '../../addNew/categories/accessory/bowlType';
 import CoalSize from '../../addNew/categories/coal/size';
 import CoalWeight from '../../addNew/categories/coal/weight';
 import { Form, PriceBlock, SearchButton } from './filters.styled';
+import { ButtonBlock, ResetButton } from './filters.styled';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-export default function SearchFilters({ category, page, limit }) {
+export default function SearchFilters({ category, page, limit, handleFetch }) {
   const { brands, promotions, colors, hookah_sizes } = useEnum();
   const { flavors, types, bowl_types } = useEnum();
 
-  const dispatch = useDispatch();
-
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, reset } = useForm();
 
   const handleSearch = formData => {
-    console.log(formData);
+    const params = {
+      page,
+      limit,
+    };
 
-    switch (category) {
-      case 'all':
-        dispatch(getAllProducts({ page: page, limit: limit }));
-        break;
-      case 'hookah':
-        break;
-      case 'tobacco':
-        break;
-      case 'coal':
-        break;
-      case 'accessories':
-        break;
-      default:
-        dispatch(getAllProducts());
-    }
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== null && value !== '') {
+        if (typeof value === 'object') {
+          if (key === 'color') {
+            const colorParts = value.color.split(',');
+            params[key] = colorParts[0].trim().toLowerCase();
+          } else {
+            params[key] = value[key];
+          }
+        } else {
+          params[key] = value;
+        }
+      }
+    });
+
+    handleFetch(params);
   };
 
   return (
@@ -130,10 +131,14 @@ export default function SearchFilters({ category, page, limit }) {
             </>
           )}
         </FiltersBlock>
-
-        <SearchButton variant="contained" type="submit">
-          Search
-        </SearchButton>
+        <ButtonBlock>
+          <ResetButton variant="contained" type="reset" onClick={() => reset()}>
+            Reset
+          </ResetButton>
+          <SearchButton variant="contained" type="submit">
+            Search
+          </SearchButton>
+        </ButtonBlock>
       </Form>
     </>
   );
