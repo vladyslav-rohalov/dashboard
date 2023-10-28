@@ -5,6 +5,7 @@ export const FiltersBlock = styled(Box)({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'start',
+  alignItems: 'center',
   marginTop: 16,
   gap: 16,
   flexWrap: 'wrap',

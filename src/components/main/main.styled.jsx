@@ -11,7 +11,7 @@ export const Container = styled(Box)({
 export const Section = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
-  width: 'calc(100% - 400px)',
+  width: 'calc(100% - 240px)',
   padding: '16px 32px',
-  marginLeft: 400,
+  marginLeft: 240,
 });

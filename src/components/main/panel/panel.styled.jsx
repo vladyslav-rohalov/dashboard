@@ -7,7 +7,7 @@ export const Container = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   justifyContent: 'space-between',
   backgroundColor: theme.palette.primary.main,
-  width: '400px',
+  width: '240px',
   height: '100%',
   padding: '16px 0 16px 16px',
 }));

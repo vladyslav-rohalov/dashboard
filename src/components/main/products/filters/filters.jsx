@@ -1,10 +1,11 @@
-import { InputLabel } from '@mui/material/';
-import { FormControl, Select, MenuItem } from '@mui/material';
-import { Input } from '../../addNew/addNew.styled';
+import { useDispatch } from 'react-redux';
+import { getAllProducts } from '../../../../redux/products/operations';
 import { useEnum } from '../../../../hooks/useEnum';
-import { useForm, Controller } from 'react-hook-form';
-import RemoveIcon from '@mui/icons-material/Remove';
-import { Form, PriceBlock } from './filters.styled';
+import { useForm } from 'react-hook-form';
+import { FiltersBlock } from '../../addNew/addNew.styled';
+import BaseFilter from './baseFilter/baseFilter';
+import Publish from '../../addNew/commonFileds/publish/publish';
+import Images from '../../addNew/commonFileds/image/image';
 import Brand from '../../addNew/commonFileds/brand/brand';
 import Promotion from '../../addNew/commonFileds/promotion/promotion';
 import Status from '../../addNew/commonFileds/status/status';
@@ -17,80 +18,122 @@ import Type from '../../addNew/categories/accessory/type';
 import BowlType from '../../addNew/categories/accessory/bowlType';
 import CoalSize from '../../addNew/categories/coal/size';
 import CoalWeight from '../../addNew/categories/coal/weight';
+import { Form, PriceBlock, SearchButton } from './filters.styled';
+import RemoveIcon from '@mui/icons-material/Remove';
 
-export default function SearchFilters({ category }) {
+export default function SearchFilters({ category, page, limit }) {
   const { brands, promotions, colors, hookah_sizes } = useEnum();
   const { flavors, types, bowl_types } = useEnum();
+
+  const dispatch = useDispatch();
+
+  const { handleSubmit, control } = useForm();
+
+  const handleSearch = formData => {
+    console.log(formData);
+
+    switch (category) {
+      case 'all':
+        dispatch(getAllProducts({ page: page, limit: limit }));
+        break;
+      case 'hookah':
+        break;
+      case 'tobacco':
+        break;
+      case 'coal':
+        break;
+      case 'accessories':
+        break;
+      default:
+        dispatch(getAllProducts());
+    }
+  };
+
   return (
     <>
-      <Form>
-        <Input
-          mt={0}
-          width={100}
-          label="Id"
-          id="id"
-          type="text"
-          autoComplete="off"
-        />
-        <PriceBlock>
-          <Input
-            mt={0}
-            width={100}
-            label="Price min"
-            id="min"
-            type="text"
-            autoComplete="off"
+      <Form component="form" onSubmit={handleSubmit(handleSearch)}>
+        <FiltersBlock>
+          <BaseFilter control={control} label={'Id'} name={'id'} width={80} />
+          <Publish control={control} width={100} />
+          <Images control={control} width={100} />
+          <Status width={160} control={control} required={false} />
+          <PriceBlock>
+            <BaseFilter
+              control={control}
+              label={'Price min'}
+              name={'min'}
+              width={100}
+            />
+            <RemoveIcon />
+            <BaseFilter
+              control={control}
+              label={'Price max'}
+              name={'max'}
+              width={100}
+            />
+          </PriceBlock>
+          <Brand width={160} control={control} list={brands} required={false} />
+          <Promotion
+            width={160}
+            control={control}
+            list={promotions}
+            required={false}
           />
-          <RemoveIcon />
-          <Input
-            mt={0}
-            width={100}
-            label="Price max"
-            id="max"
-            type="text"
-            autoComplete="off"
-          />
-        </PriceBlock>
-        <Brand list={brands} required={false} weight={200} />
-        <Promotion list={promotions} required={false} weight={120} />
-        <Status width={120} />
-        <FormControl>
-          <InputLabel id="publish-select-label">Publish</InputLabel>
-          <Select
-            id="publish-select"
-            name="publish"
-            label="Paublish"
-            sx={{ width: 100 }}
-          >
-            <MenuItem value={'yes'}>Yes</MenuItem>
-            <MenuItem value={'no'}>No</MenuItem>
-          </Select>
-        </FormControl>
-        {category === 'hookah' && (
-          <>
-            <HookahColor list={colors} width={200} />
-            <HookahSize list={hookah_sizes} width={200} />
-          </>
-        )}
-        {category === 'tobacco' && (
-          <>
-            <Flavor list={flavors} width={200} required={false} />
-            <TobaccoWeight />
-            <Strength />
-          </>
-        )}
-        {category === 'accessories' && (
-          <>
-            <Type list={types} required={false} width={200} />
-            <BowlType list={bowl_types} required={false} width={200} />
-          </>
-        )}
-        {category === 'coal' && (
-          <>
-            <CoalSize required={false} weight={200} />
-            <CoalWeight required={false} weight={200} />
-          </>
-        )}
+          {category === 'hookah' && (
+            <>
+              <HookahColor
+                width={160}
+                list={colors}
+                control={control}
+                required={false}
+              />
+              <HookahSize
+                width={160}
+                list={hookah_sizes}
+                control={control}
+                required={false}
+              />
+            </>
+          )}
+          {category === 'tobacco' && (
+            <>
+              <Strength width={160} control={control} />
+              <Flavor
+                width={160}
+                list={flavors}
+                control={control}
+                required={false}
+              />
+              <TobaccoWeight width={160} control={control} required={false} />
+            </>
+          )}
+          {category === 'accessories' && (
+            <>
+              <Type
+                width={200}
+                list={types}
+                control={control}
+                required={false}
+              />
+              <BowlType
+                width={200}
+                control={control}
+                list={bowl_types}
+                required={false}
+              />
+            </>
+          )}
+          {category === 'coal' && (
+            <>
+              <CoalSize width={200} control={control} required={false} />
+              <CoalWeight width={200} control={control} required={false} />
+            </>
+          )}
+        </FiltersBlock>
+
+        <SearchButton variant="contained" type="submit">
+          Search
+        </SearchButton>
       </Form>
     </>
   );

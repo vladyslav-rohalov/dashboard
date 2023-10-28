@@ -5,7 +5,6 @@ import { addHookah, addTobacco } from '../../../../redux/products/operations';
 import { addCoal, addAccessory } from '../../../../redux/products/operations';
 import { useEnum } from '../../../../hooks/useEnum';
 import { useForm } from 'react-hook-form';
-import { useProducts } from '../../../../hooks/useProducts';
 import { Button, FormControl } from '@mui/material';
 import SetCatergory from '../../common/setCategory/setCategory';
 import Promotion from '../commonFileds/promotion/promotion';
@@ -33,12 +32,6 @@ export default function AddDetails({ onSuccess }) {
   const watchedValues = watch();
 
   const dispatch = useDispatch();
-
-  const { error } = useProducts();
-
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
 
   useEffect(() => {
     dispatch(getAllEnums());

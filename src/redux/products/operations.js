@@ -5,9 +5,11 @@ axios.defaults.baseURL = 'http://localhost:5000';
 
 export const getAllProducts = createAsyncThunk(
   'api/products',
-  async (_, thunkAPI) => {
+  async (params, thunkAPI) => {
     try {
-      const response = await axios.get('api/products');
+      const response = await axios.get('api/products', {
+        params: { page: params.page, limit: params.limit },
+      });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue({

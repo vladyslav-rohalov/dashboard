@@ -6,7 +6,7 @@ export default function Strength({ width, control, required = false }) {
   return (
     <Controller
       name="strength"
-      defaultValue={'none'}
+      defaultValue={''}
       control={control}
       render={({ field: { onChange, value } }) => {
         return (
