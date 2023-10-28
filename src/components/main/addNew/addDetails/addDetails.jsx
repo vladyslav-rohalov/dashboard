@@ -4,8 +4,10 @@ import { getAllEnums } from '../../../../redux/enums/operations';
 import { addHookah, addTobacco } from '../../../../redux/products/operations';
 import { addCoal, addAccessory } from '../../../../redux/products/operations';
 import { useEnum } from '../../../../hooks/useEnum';
+import { useForm } from 'react-hook-form';
+import { useProducts } from '../../../../hooks/useProducts';
 import { Button, FormControl } from '@mui/material';
-import SetCatergory from '../setCategory/setCatefory';
+import SetCatergory from '../../common/setCategory/setCategory';
 import Promotion from '../commonFileds/promotion/promotion';
 import Status from '../commonFileds/status/status';
 import Brand from '../commonFileds/brand/brand';
@@ -26,46 +28,38 @@ import { FiltersBlock } from '../addNew.styled';
 
 export default function AddDetails({ onSuccess }) {
   const [category, setCategory] = useState('hookah');
-  const [status, setStatus] = useState('in stock');
-  const [strength, setStrength] = useState('none');
-  const [promotion, setPromotion] = useState(null);
-  const [brand, setBrand] = useState(null);
-  const [flavor, setFlavor] = useState(null);
-  const [color, setColor] = useState(null);
-  const [hookahSize, setHookahSize] = useState(null);
-  const [type, setType] = useState(null);
-  const [bowlType, setBowlType] = useState(null);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [available, setAvailable] = useState('');
-  const [coalSize, setCoalSize] = useState('');
-  const [coalWeight, setCoalWeight] = useState('');
-  const [tobaccoWeight, setTobaccoWeight] = useState('');
+
+  const { handleSubmit, control, watch, setValue } = useForm();
+  const watchedValues = watch();
 
   const dispatch = useDispatch();
+
+  const { error } = useProducts();
+
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
 
   useEffect(() => {
     dispatch(getAllEnums());
   }, [dispatch]);
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const handleAddDetails = async formData => {
     const commonData = {
-      promotion: promotion?.promotion,
-      brand: brand?.brand,
-      status,
-      price: +price,
-      description,
-      title,
-      available: +available,
+      promotion: formData.promotion?.promotion,
+      brand: formData.brand?.brand,
+      status: formData.status,
+      price: +formData.price,
+      description: formData.description,
+      title: formData.title,
+      available: +formData.available,
     };
 
     if (category === 'hookah') {
       const data = {
         ...commonData,
-        color: color?.color,
-        hookah_size: hookahSize?.hookah_size,
+        color: formData.color?.color,
+        hookah_size: formData.hookah_size?.hookah_size,
       };
       const response = await dispatch(addHookah(data));
       if (response.meta.requestStatus === 'rejected') return;
@@ -73,9 +67,9 @@ export default function AddDetails({ onSuccess }) {
     if (category === 'tobacco') {
       const data = {
         ...commonData,
-        flavor: flavor?.flavor,
-        tobacco_weight: +tobaccoWeight,
-        strength: strength === 'none' ? null : strength,
+        flavor: formData.flavor?.flavor,
+        tobacco_weight: +formData.tobacco_weight,
+        strength: formData.strength === 'none' ? null : formData.strength,
       };
       const response = await dispatch(addTobacco(data));
       if (response.meta.requestStatus === 'rejected') return;
@@ -83,8 +77,8 @@ export default function AddDetails({ onSuccess }) {
     if (category === 'coal') {
       const data = {
         ...commonData,
-        coal_size: +coalSize,
-        coal_weight: +coalWeight,
+        coal_size: +formData.size,
+        coal_weight: +formData.coal_weight,
       };
       const response = await dispatch(addCoal(data));
       if (response.meta.requestStatus === 'rejected') return;
@@ -92,8 +86,8 @@ export default function AddDetails({ onSuccess }) {
     if (category === 'accessories') {
       const data = {
         ...commonData,
-        type: type?.type,
-        bowl_type: bowlType?.bowl_type,
+        type: formData.type?.type,
+        bowl_type: formData.bowl_type?.bowl_type,
       };
       const response = await dispatch(addAccessory(data));
       if (response.meta.requestStatus === 'rejected') return;
@@ -116,100 +110,50 @@ export default function AddDetails({ onSuccess }) {
     <>
       <SetCatergory handleCategory={e => setCategory(e)} />
       {!isLoading && (
-        <FormControl component="form" onSubmit={handleSubmit}>
+        <FormControl component="form" onSubmit={handleSubmit(handleAddDetails)}>
           <FiltersBlock>
-            <Status value={status} onChange={value => setStatus(value)} />
-            <Promotion
-              value={promotion}
-              onChange={value => setPromotion(value)}
-              list={promotions}
-            />
-            <Brand
-              value={brand}
-              onChange={value => setBrand(value)}
-              list={brands}
-              qwe={isLoading}
-            />
-            <Price value={price} onChange={value => setPrice(value)} />
-            <Available
-              value={available}
-              onChange={value => setAvailable(value)}
-            />
+            <Status width={200} control={control} />
+            <Promotion width={200} control={control} list={promotions} />
+            <Brand width={200} control={control} list={brands} />
+            <Price width={140} control={control} />
+            <Available width={140} control={control} />
             {category === 'hookah' && (
               <>
-                <HookahColor
-                  value={color}
-                  onChange={value => setColor(value)}
-                  list={colors}
-                />
-                <HookahSize
-                  value={hookahSize}
-                  onChange={value => setHookahSize(value)}
-                  list={hookah_sizes}
-                />
+                <HookahColor width={200} list={colors} control={control} />
+                <HookahSize width={200} list={hookah_sizes} control={control} />
               </>
             )}
             {category === 'tobacco' && (
               <>
-                <Strength
-                  value={strength}
-                  onChange={value => setStrength(value)}
-                />
-                <Flavor
-                  value={flavor}
-                  onChange={value => setFlavor(value)}
-                  list={flavors}
-                />
-                <TobaccoWeight
-                  value={tobaccoWeight}
-                  onChange={value => setTobaccoWeight(value)}
-                />
+                <Strength width={200} control={control} />
+                <Flavor width={200} list={flavors} control={control} />
+                <TobaccoWeight width={200} control={control} />
               </>
             )}
             {category === 'accessories' && (
               <>
-                <Type
-                  value={type}
-                  onChange={value => setType(value)}
-                  list={types}
-                />
+                <Type width={200} list={types} control={control} />
                 <BowlType
-                  value={bowlType}
-                  onChange={value => setBowlType(value)}
+                  width={200}
+                  control={control}
                   list={bowl_types}
+                  required={false}
                 />
               </>
             )}
             {category === 'coal' && (
               <>
-                <CoalSize
-                  value={coalSize}
-                  onChange={value => setCoalSize(value)}
-                />
-                <CoalWeight
-                  value={coalWeight}
-                  onChange={value => setCoalWeight(value)}
-                />
+                <CoalSize width={200} control={control} />
+                <CoalWeight width={200} control={control} />
               </>
             )}
             <Title
-              value={title}
-              onChange={value => setTitle(value)}
+              control={control}
+              setValue={setValue}
               cat={category}
-              brand={brand}
-              color={color}
-              hookahSize={hookahSize}
-              flavor={flavor}
-              type={type}
-              bowlType={bowlType}
-              tobaccoWeight={tobaccoWeight}
-              coalSize={coalSize}
-              coalWeight={coalWeight}
+              formValues={watchedValues}
             />
-            <Description
-              value={description}
-              onChange={value => setDescription(value)}
-            />
+            <Description control={control} />
           </FiltersBlock>
 
           <Button

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useProducts } from '../../../hooks/useProducts';
-import { Container, PageTitle } from './addNew.styled';
+import { PageTitle } from './addNew.styled';
 import HorizontalStepper from './stepper/stepper';
 import AddDetails from './addDetails/addDetails';
 import AddPhoto from './addPhoto/addPhoto';
@@ -16,7 +16,7 @@ export default function AddNew() {
   };
 
   return (
-    <Container component={'section'}>
+    <>
       <PageTitle>Add new product</PageTitle>
       <HorizontalStepper activeStep={activeStep} />
       {error && <AlertNotify error={error} />}
@@ -27,6 +27,6 @@ export default function AddNew() {
       {activeStep === 2 && !isLoading && (
         <Result onSuccess={() => setActiveStep(0)} product={response} />
       )}
-    </Container>
+    </>
   );
 }

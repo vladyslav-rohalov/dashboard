@@ -7,3 +7,11 @@ export const Container = styled(Box)({
   bgcolor: 'aliceblue',
   height: '100vh',
 });
+
+export const Section = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  width: 'calc(100% - 400px)',
+  padding: '16px 32px',
+  marginLeft: 400,
+});

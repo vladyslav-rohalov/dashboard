@@ -12,6 +12,7 @@ export default function AutocompleteBase({
   required = true,
 }) {
   const filter = createFilterOptions();
+
   return (
     <Autocomplete
       value={value}

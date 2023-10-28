@@ -1,8 +1,9 @@
+import { Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { addColor } from '../../../../../redux/enums/operations';
 import AutocompleteBase from '../../autocomplete/autocomplete';
 
-export default function HookahColor({ value, onChange, list }) {
+export default function HookahColor({ list, width, control, required }) {
   const dispatch = useDispatch();
 
   const addNewColor = newColor => {
@@ -18,14 +19,24 @@ export default function HookahColor({ value, onChange, list }) {
   });
 
   return (
-    <AutocompleteBase
-      value={value}
-      onChange={onChange}
-      list={listMod}
-      addNew={addNewColor}
-      field={'color'}
-      label={'Hookah color'}
-      width={300}
+    <Controller
+      control={control}
+      name="color"
+      defaultValue={null}
+      render={({ field: { onChange, value } }) => {
+        return (
+          <AutocompleteBase
+            value={value}
+            onChange={onChange}
+            list={listMod}
+            addNew={addNewColor}
+            field={'color'}
+            label={'Hookah color'}
+            width={width}
+            required={required}
+          />
+        );
+      }}
     />
   );
 }

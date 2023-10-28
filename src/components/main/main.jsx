@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Container } from './main.styled';
+import { Container, Section } from './main.styled';
 import Panel from './panel/panel';
 import AddNew from './addNew/addNew';
+import Products from './products/products';
 
 export default function Main({ user }) {
   const [tabValue, setTabValue] = useState(0);
@@ -12,7 +13,10 @@ export default function Main({ user }) {
         value={tabValue}
         handleChange={value => setTabValue(value)}
       />
-      {tabValue === 0 && <AddNew />}
+      <Section component={'section'}>
+        {tabValue === 0 && <AddNew />}
+        {tabValue === 1 && <Products />}
+      </Section>
     </Container>
   );
 }
