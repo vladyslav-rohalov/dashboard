@@ -21,7 +21,13 @@ import { ButtonBlock, ResetButton } from './filters.styled';
 import RemoveIcon from '@mui/icons-material/Remove';
 import SortFilter from './sortFilter/sortFilter';
 
-export default function SearchFilters({ category, page, limit, handleFetch }) {
+export default function SearchFilters({
+  category,
+  page,
+  limit,
+  handleFetch,
+  updateParams,
+}) {
   const { brands, promotions, colors, hookah_sizes } = useEnum();
   const { flavors, types, bowl_types } = useEnum();
 
@@ -47,15 +53,16 @@ export default function SearchFilters({ category, page, limit, handleFetch }) {
         }
       }
     });
-
+    console.log(params);
     handleFetch(params);
+    updateParams(params);
   };
 
   return (
     <>
       <Form component="form" onSubmit={handleSubmit(handleSearch)}>
         <FiltersBlock>
-          <BaseFilter control={control} label={'Id'} name={'id'} width={80} />
+          <BaseFilter control={control} label={'Id'} name={'id'} width={100} />
           <Publish control={control} width={100} />
           <Images control={control} width={100} />
           <Status width={160} control={control} required={false} />
@@ -64,19 +71,19 @@ export default function SearchFilters({ category, page, limit, handleFetch }) {
               control={control}
               label={'Price min'}
               name={'min'}
-              width={100}
+              width={120}
             />
             <RemoveIcon />
             <BaseFilter
               control={control}
               label={'Price max'}
               name={'max'}
-              width={100}
+              width={120}
             />
           </PriceBlock>
-          <Brand width={160} control={control} list={brands} required={false} />
+          <Brand width={200} control={control} list={brands} required={false} />
           <Promotion
-            width={120}
+            width={140}
             control={control}
             list={promotions}
             required={false}
@@ -84,13 +91,13 @@ export default function SearchFilters({ category, page, limit, handleFetch }) {
           {category === 'hookah' && (
             <>
               <HookahColor
-                width={160}
+                width={200}
                 list={colors}
                 control={control}
                 required={false}
               />
               <HookahSize
-                width={160}
+                width={200}
                 list={hookah_sizes}
                 control={control}
                 required={false}
@@ -99,9 +106,9 @@ export default function SearchFilters({ category, page, limit, handleFetch }) {
           )}
           {category === 'tobacco' && (
             <>
-              <Strength width={160} control={control} />
+              <Strength width={200} control={control} />
               <Flavor
-                width={160}
+                width={200}
                 list={flavors}
                 control={control}
                 required={false}
@@ -139,8 +146,8 @@ export default function SearchFilters({ category, page, limit, handleFetch }) {
           <SearchButton variant="contained" type="submit">
             Search
           </SearchButton>
+          <SortFilter control={control} />
         </ButtonBlock>
-        <SortFilter control={control} />
       </Form>
     </>
   );

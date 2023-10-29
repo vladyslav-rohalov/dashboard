@@ -14,10 +14,11 @@ export const PriceBlock = styled(Box)({
 });
 
 export const ButtonBlock = styled(Box)({
+  position: 'relative',
   display: 'flex',
   flexDirection: 'row',
   gap: 32,
-  margin: '32px auto',
+  margin: '32px 0',
 });
 
 export const ResetButton = styled(Button)(({ theme }) => ({

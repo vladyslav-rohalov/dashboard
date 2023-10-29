@@ -5,13 +5,13 @@ import { IconImage, StyledTableRow, IconInfo } from './resultTable.styled';
 
 export default function ResultTable({ products, handleOpenCard }) {
   const defineCat = product => {
-    if (product.hookahs !== null) {
+    if (product?.hookahs && product?.hookahs !== null) {
       return 'hookahs';
-    } else if (product.tobacco !== null) {
+    } else if (product?.tobacco && product?.tobacco !== null) {
       return 'tobacco';
-    } else if (product.coals !== null) {
+    } else if (product?.coals && product?.coals !== null) {
       return 'coals';
-    } else if (product.accessories !== null) {
+    } else if (product?.accessories && product?.accessories !== null) {
       return 'accessories';
     }
   };

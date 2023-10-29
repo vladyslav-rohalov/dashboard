@@ -51,7 +51,7 @@ export default function AddDetails({ onSuccess }) {
     if (category === 'hookah') {
       const data = {
         ...commonData,
-        color: formData.color?.color,
+        color: formData.color?.color.split(',')[0],
         hookah_size: formData.hookah_size?.hookah_size,
       };
       const response = await dispatch(addHookah(data));

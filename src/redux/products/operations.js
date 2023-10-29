@@ -3,23 +3,6 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:5000';
 
-export const getAllProducts = createAsyncThunk(
-  'api/products',
-  async (params, thunkAPI) => {
-    try {
-      const response = await axios.get('api/products', {
-        params,
-      });
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue({
-        message: e.response.data.message,
-        status: e.response.status,
-      });
-    }
-  }
-);
-
 export const addImages = createAsyncThunk(
   'add/images',
   async (formData, thunkAPI) => {
@@ -72,6 +55,20 @@ const createAsyncCommonThunk = (type, url, method) => {
   });
 };
 
+const createAsyncParamsThunk = (type, url, method) => {
+  return createAsyncThunk(type, async (params, thunkAPI) => {
+    try {
+      const response = await axios[method](`api/${url}`, { params });
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: e.response.data.message,
+        status: e.response.status,
+      });
+    }
+  });
+};
+
 export const addHookah = createAsyncCommonThunk(
   'create/hookahs',
   'products/hookahs',
@@ -93,26 +90,32 @@ export const addAccessory = createAsyncCommonThunk(
   'post'
 );
 
-// export const getHookahs = createAsyncCommonThunk(
-//   'get/hookahs',
-//   'products/hookahs',
-//   'get'
-// );
+export const getAllProducts = createAsyncParamsThunk(
+  'get/all',
+  'products',
+  'get'
+);
 
-// export const getTobacco = createAsyncCommonThunk(
-//   'get/tobacco',
-//   'products/tobacco',
-//   'get'
-// );
+export const getHookahs = createAsyncParamsThunk(
+  'get/hookahs',
+  'products/hookahs',
+  'get'
+);
 
-// export const getCoals = createAsyncCommonThunk(
-//   'get/coals',
-//   'products/coals',
-//   'get'
-// );
+export const getTobacco = createAsyncParamsThunk(
+  'get/tobacco',
+  'products/tobacco',
+  'get'
+);
 
-// export const getAccessories = createAsyncCommonThunk(
-//   'get/accessories',
-//   'products/accessories',
-//   'get'
-// );
+export const getCoals = createAsyncParamsThunk(
+  'get/coals',
+  'products/coals',
+  'get'
+);
+
+export const getAccessories = createAsyncParamsThunk(
+  'get/accessories',
+  'products/accessories',
+  'get'
+);
