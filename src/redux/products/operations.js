@@ -6,7 +6,6 @@ axios.defaults.baseURL = 'http://localhost:5000';
 export const getAllProducts = createAsyncThunk(
   'api/products',
   async (params, thunkAPI) => {
-    console.log(params);
     try {
       const response = await axios.get('api/products', {
         params,

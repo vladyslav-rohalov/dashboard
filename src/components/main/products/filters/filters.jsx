@@ -19,6 +19,7 @@ import CoalWeight from '../../addNew/categories/coal/weight';
 import { Form, PriceBlock, SearchButton } from './filters.styled';
 import { ButtonBlock, ResetButton } from './filters.styled';
 import RemoveIcon from '@mui/icons-material/Remove';
+import SortFilter from './sortFilter/sortFilter';
 
 export default function SearchFilters({ category, page, limit, handleFetch }) {
   const { brands, promotions, colors, hookah_sizes } = useEnum();
@@ -75,7 +76,7 @@ export default function SearchFilters({ category, page, limit, handleFetch }) {
           </PriceBlock>
           <Brand width={160} control={control} list={brands} required={false} />
           <Promotion
-            width={160}
+            width={120}
             control={control}
             list={promotions}
             required={false}
@@ -139,6 +140,7 @@ export default function SearchFilters({ category, page, limit, handleFetch }) {
             Search
           </SearchButton>
         </ButtonBlock>
+        <SortFilter control={control} />
       </Form>
     </>
   );

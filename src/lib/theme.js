@@ -21,7 +21,6 @@ export const theme = createTheme({
       main: '#213555',
       light: '#4F709C',
       subsidiary: '#0a9396',
-      w: '#94d2bd',
       info: '#E5D283',
       accent: '#ee9b00',
       hot: '#F46145',
@@ -72,7 +71,8 @@ export const theme = createTheme({
     MuiInputLabel: {
       styleOverrides: {
         root: ({ theme }) => ({
-          color: theme.palette.primary.text,
+          // color: theme.palette.primary.text,
+          color: `${theme.palette.primary.text} !important`,
         }),
 
         shrink: ({ theme }) => ({

@@ -3,7 +3,7 @@ import { Radio, FormLabel } from '@mui/material';
 
 export default function SetCatergory({ handleCategory, withAll = false }) {
   return (
-    <FormControl onChange={e => handleCategory(e.target.value)} sx={{ mt: 4 }}>
+    <FormControl onChange={e => handleCategory(e.target.value)} sx={{ mt: 2 }}>
       <FormLabel id="radio-buttons-group-label">Category</FormLabel>
       <RadioGroup
         aria-labelledby="radio-buttons-group-label"

@@ -5,7 +5,7 @@ export const Container = styled(Box)({
   display: 'flex',
   flexDirection: 'row',
   bgcolor: 'aliceblue',
-  height: '100vh',
+  // height: '100vh',
 });
 
 export const Section = styled(Box)({
