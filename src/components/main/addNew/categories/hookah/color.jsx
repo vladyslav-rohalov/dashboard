@@ -3,7 +3,13 @@ import { useDispatch } from 'react-redux';
 import { addColor } from '../../../../../redux/enums/operations';
 import AutocompleteBase from '../../autocomplete/autocomplete';
 
-export default function HookahColor({ list, width, control, required }) {
+export default function HookahColor({
+  list,
+  width,
+  control,
+  required,
+  value = null,
+}) {
   const dispatch = useDispatch();
 
   const addNewColor = newColor => {
@@ -22,7 +28,7 @@ export default function HookahColor({ list, width, control, required }) {
     <Controller
       control={control}
       name="color"
-      defaultValue={null}
+      defaultValue={value}
       render={({ field: { onChange, value } }) => {
         return (
           <AutocompleteBase

@@ -2,11 +2,11 @@ import { Controller } from 'react-hook-form';
 import { FormControl } from '@mui/material';
 import { Input } from '../../addNew.styled';
 
-export default function Price({ width, control, required = true }) {
+export default function Price({ width, control, required = true, value = '' }) {
   return (
     <Controller
       name="price"
-      defaultValue={''}
+      defaultValue={value}
       control={control}
       render={({ field: { onChange, value } }) => {
         return (

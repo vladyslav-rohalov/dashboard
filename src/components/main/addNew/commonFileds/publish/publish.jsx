@@ -2,12 +2,12 @@ import { Controller } from 'react-hook-form';
 import { FormControl, InputLabel, Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
 
-export default function Publish({ width = 120, control }) {
+export default function Publish({ width = 120, control, value = '' }) {
   return (
     <Controller
       control={control}
       name="publish"
-      defaultValue={''}
+      defaultValue={value}
       render={({ field: { onChange, value } }) => {
         return (
           <FormControl sx={{ width: width }}>

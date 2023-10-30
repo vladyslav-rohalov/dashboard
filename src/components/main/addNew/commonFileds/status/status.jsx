@@ -2,12 +2,17 @@ import { Controller } from 'react-hook-form';
 import { FormControl, InputLabel, Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
 
-export default function Status({ width, control, required = true }) {
+export default function Status({
+  width = 120,
+  control,
+  required = true,
+  value = '',
+}) {
   return (
     <Controller
       control={control}
       name="status"
-      defaultValue={''}
+      defaultValue={value}
       render={({ field: { onChange, value } }) => {
         return (
           <FormControl sx={{ width: width }}>

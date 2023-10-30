@@ -32,8 +32,8 @@ export default function SortFilter({ control }) {
                 <MenuItem value="">default</MenuItem>
                 <MenuItem value={'cheap'}>cheap</MenuItem>
                 <MenuItem value={'expensive'}>expensive</MenuItem>
-                <MenuItem value={'new'}>new</MenuItem>
-                <MenuItem value={'old'}>old</MenuItem>
+                <MenuItem value={'newer'}>new</MenuItem>
+                <MenuItem value={'older'}>old</MenuItem>
               </Select>
             );
           }}

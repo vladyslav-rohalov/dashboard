@@ -3,7 +3,13 @@ import { Controller } from 'react-hook-form';
 import { addPromotion } from '../../../../../redux/enums/operations';
 import AutocompleteBase from '../../autocomplete/autocomplete';
 
-export default function Promotion({ list, width, required, control }) {
+export default function Promotion({
+  list,
+  width = 160,
+  required = true,
+  control,
+  value = null,
+}) {
   const dispatch = useDispatch();
 
   const addNewPromotion = newPromotion => {
@@ -14,7 +20,7 @@ export default function Promotion({ list, width, required, control }) {
     <Controller
       control={control}
       name="promotion"
-      defaultValue={null}
+      defaultValue={value}
       render={({ field: { onChange, value } }) => {
         return (
           <AutocompleteBase

@@ -2,15 +2,21 @@ import { Controller } from 'react-hook-form';
 import { FormControl } from '@mui/material';
 import { Input } from '../../../addNew/addNew.styled';
 
-export default function BaseFilter({ width = 120, control, name, label }) {
+export default function BaseFilter({
+  width = 120,
+  control,
+  name,
+  label,
+  value = '',
+}) {
   return (
     <Controller
       name={name}
-      defaultValue={''}
+      defaultValue={value}
       control={control}
       render={({ field: { onChange, value } }) => {
         return (
-          <FormControl>
+          <FormControl sx={{ width: width }}>
             <Input
               mt={0}
               width={width}

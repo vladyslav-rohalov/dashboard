@@ -1,4 +1,3 @@
-import { useEnum } from '../../../../hooks/useEnum';
 import { useForm } from 'react-hook-form';
 import { FiltersBlock } from '../../addNew/addNew.styled';
 import BaseFilter from './baseFilter/baseFilter';
@@ -22,14 +21,15 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import SortFilter from './sortFilter/sortFilter';
 
 export default function SearchFilters({
+  enumValues,
   category,
   page,
   limit,
   handleFetch,
   updateParams,
 }) {
-  const { brands, promotions, colors, hookah_sizes } = useEnum();
-  const { flavors, types, bowl_types } = useEnum();
+  const { brands, promotions, colors, hookah_sizes } = enumValues;
+  const { flavors, types, bowl_types } = enumValues;
 
   const { handleSubmit, control, reset } = useForm();
 
@@ -53,9 +53,16 @@ export default function SearchFilters({
         }
       }
     });
-    console.log(params);
+
     handleFetch(params);
     updateParams(params);
+  };
+
+  const handleReset = () => {
+    reset();
+    const defaultParams = { page: 1, limit: 25 };
+    handleFetch(defaultParams);
+    updateParams(defaultParams);
   };
 
   return (
@@ -140,7 +147,7 @@ export default function SearchFilters({
           )}
         </FiltersBlock>
         <ButtonBlock>
-          <ResetButton variant="contained" type="reset" onClick={() => reset()}>
+          <ResetButton variant="contained" type="reset" onClick={handleReset}>
             Reset
           </ResetButton>
           <SearchButton variant="contained" type="submit">
