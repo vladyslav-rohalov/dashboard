@@ -3,7 +3,13 @@ import { Controller } from 'react-hook-form';
 import { addFlavor } from '../../../../../redux/enums/operations';
 import AutocompleteBase from '../../autocomplete/autocomplete';
 
-export default function Flavor({ list, weight, required, control }) {
+export default function Flavor({
+  list,
+  weight,
+  required = true,
+  control,
+  value = null,
+}) {
   const dispatch = useDispatch();
 
   const addNewFlavor = newFlavor => {
@@ -14,7 +20,7 @@ export default function Flavor({ list, weight, required, control }) {
     <Controller
       control={control}
       name="flavor"
-      defaultValue={null}
+      defaultValue={value}
       render={({ field: { onChange, value } }) => {
         return (
           <AutocompleteBase

@@ -6,12 +6,13 @@ export default function TobaccoWeight({
   width = 200,
   control,
   required = true,
+  value = '',
 }) {
   return (
     <Controller
       control={control}
       name="tobacco_weight"
-      defaultValue={''}
+      defaultValue={value}
       render={({ field: { onChange, value } }) => {
         return (
           <FormControl>

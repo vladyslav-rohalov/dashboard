@@ -29,7 +29,7 @@ export default function Description({
               multiline
               inputProps={{
                 style: {
-                  height: '200px',
+                  height: '160px',
                   overflow: 'auto',
                 },
               }}

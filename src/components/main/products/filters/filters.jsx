@@ -69,10 +69,9 @@ export default function SearchFilters({
     <>
       <Form component="form" onSubmit={handleSubmit(handleSearch)}>
         <FiltersBlock>
-          <BaseFilter control={control} label={'Id'} name={'id'} width={100} />
-          <Publish control={control} width={100} />
-          <Images control={control} width={100} />
-          <Status width={160} control={control} required={false} />
+          <BaseFilter control={control} label={'Id'} name={'id'} width={120} />
+          <Publish control={control} width={120} />
+          <Images control={control} width={120} />
           <PriceBlock>
             <BaseFilter
               control={control}
@@ -88,9 +87,10 @@ export default function SearchFilters({
               width={120}
             />
           </PriceBlock>
+          <Status width={200} control={control} required={false} />
           <Brand width={200} control={control} list={brands} required={false} />
           <Promotion
-            width={140}
+            width={200}
             control={control}
             list={promotions}
             required={false}
@@ -120,7 +120,7 @@ export default function SearchFilters({
                 control={control}
                 required={false}
               />
-              <TobaccoWeight width={160} control={control} required={false} />
+              <TobaccoWeight width={200} control={control} required={false} />
             </>
           )}
           {category === 'accessories' && (

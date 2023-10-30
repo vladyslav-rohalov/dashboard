@@ -12,6 +12,8 @@ export default function HookahColor({
 }) {
   const dispatch = useDispatch();
 
+  const modValue = value ? `${value.color}, ${value.color_value}` : null;
+
   const addNewColor = newColor => {
     const color = newColor.split(',');
     dispatch(
@@ -28,7 +30,7 @@ export default function HookahColor({
     <Controller
       control={control}
       name="color"
-      defaultValue={value}
+      defaultValue={modValue}
       render={({ field: { onChange, value } }) => {
         return (
           <AutocompleteBase

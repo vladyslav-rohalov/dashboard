@@ -2,11 +2,16 @@ import { Controller } from 'react-hook-form';
 import { FormControl, InputLabel, Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
 
-export default function Strength({ width, control, required = false }) {
+export default function Strength({
+  width = 160,
+  control,
+  required = false,
+  value = '',
+}) {
   return (
     <Controller
       name="strength"
-      defaultValue={''}
+      defaultValue={value}
       control={control}
       render={({ field: { onChange, value } }) => {
         return (

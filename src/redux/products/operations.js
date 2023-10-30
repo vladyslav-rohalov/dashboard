@@ -41,6 +41,22 @@ export const publishProduct = createAsyncThunk(
   }
 );
 
+export const getProductById = createAsyncThunk(
+  'get/product',
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.get(`api/products/id/${id}`);
+      console.log(response);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: e.response.data.message,
+        status: e.response.status,
+      });
+    }
+  }
+);
+
 const createAsyncCommonThunk = (type, url, method) => {
   return createAsyncThunk(type, async (data, thunkAPI) => {
     try {
@@ -89,31 +105,26 @@ export const addAccessory = createAsyncCommonThunk(
   'products/accessories',
   'post'
 );
-
 export const getAllProducts = createAsyncParamsThunk(
   'get/all',
   'products',
   'get'
 );
-
 export const getHookahs = createAsyncParamsThunk(
   'get/hookahs',
   'products/hookahs',
   'get'
 );
-
 export const getTobacco = createAsyncParamsThunk(
   'get/tobacco',
   'products/tobacco',
   'get'
 );
-
 export const getCoals = createAsyncParamsThunk(
   'get/coals',
   'products/coals',
   'get'
 );
-
 export const getAccessories = createAsyncParamsThunk(
   'get/accessories',
   'products/accessories',

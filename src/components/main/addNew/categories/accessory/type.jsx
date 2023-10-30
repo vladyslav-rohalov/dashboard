@@ -3,7 +3,7 @@ import { Controller } from 'react-hook-form';
 import { addAccessoryType } from '../../../../../redux/enums/operations';
 import AutocompleteBase from '../../autocomplete/autocomplete';
 
-export default function Type({ list, width, required, control }) {
+export default function Type({ list, width, required, control, value = null }) {
   const dispatch = useDispatch();
 
   const addNewType = newType => {
@@ -14,7 +14,7 @@ export default function Type({ list, width, required, control }) {
     <Controller
       control={control}
       name="type"
-      defaultValue={null}
+      defaultValue={value}
       render={({ field: { onChange, value } }) => {
         return (
           <AutocompleteBase

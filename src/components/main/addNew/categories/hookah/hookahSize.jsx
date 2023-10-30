@@ -3,7 +3,13 @@ import { useDispatch } from 'react-redux';
 import { addHookahSize } from '../../../../../redux/enums/operations';
 import AutocompleteBase from '../../autocomplete/autocomplete';
 
-export default function HookahSize({ list, width, control, required }) {
+export default function HookahSize({
+  list,
+  width,
+  control,
+  required = true,
+  value = null,
+}) {
   const dispatch = useDispatch();
 
   const addNewBrand = newBrand => {
@@ -14,7 +20,7 @@ export default function HookahSize({ list, width, control, required }) {
     <Controller
       control={control}
       name="hookah_size"
-      defaultValue={null}
+      defaultValue={value}
       render={({ field: { onChange, value } }) => {
         return (
           <AutocompleteBase

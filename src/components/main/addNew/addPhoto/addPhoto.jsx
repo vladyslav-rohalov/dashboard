@@ -50,6 +50,7 @@ export default function AddPhoto({ id, onSuccess }) {
       const response = await dispatch(addImages(formData));
       if (response.meta.requestStatus === 'rejected') return;
     }
+    setFileList([]);
     onSuccess();
   };
 

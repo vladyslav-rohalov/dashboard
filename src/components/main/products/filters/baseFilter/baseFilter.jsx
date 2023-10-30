@@ -8,6 +8,7 @@ export default function BaseFilter({
   name,
   label,
   value = '',
+  disabled = false,
 }) {
   return (
     <Controller
@@ -26,6 +27,7 @@ export default function BaseFilter({
               autoComplete="off"
               value={value}
               onChange={e => onChange(e.target.value)}
+              disabled={disabled}
             />
           </FormControl>
         );

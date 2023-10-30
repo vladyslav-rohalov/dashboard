@@ -3,7 +3,13 @@ import { Controller } from 'react-hook-form';
 import { addBowlType } from '../../../../../redux/enums/operations';
 import AutocompleteBase from '../../autocomplete/autocomplete';
 
-export default function BowlType({ list, width, required, control }) {
+export default function BowlType({
+  list,
+  width,
+  required = false,
+  control,
+  value = null,
+}) {
   const dispatch = useDispatch();
 
   const addNewBowlType = newBowlType => {
@@ -13,7 +19,7 @@ export default function BowlType({ list, width, required, control }) {
     <Controller
       control={control}
       name="bowl_type"
-      defaultValue={null}
+      defaultValue={value}
       render={({ field: { onChange, value } }) => {
         return (
           <AutocompleteBase
