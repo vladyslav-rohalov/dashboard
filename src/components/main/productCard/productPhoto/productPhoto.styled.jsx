@@ -5,7 +5,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 export const Container = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
-  //   gap: 32,
 });
 
 export const CardContainer = styled(Box)(({ theme }) => ({

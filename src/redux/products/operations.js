@@ -3,6 +3,48 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:5000';
 
+const createAsyncAction = (type, request) => {
+  return createAsyncThunk(type, async (arg, thunkAPI) => {
+    try {
+      const response = await request(arg);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: e.response.data.message,
+        status: e.response.status,
+      });
+    }
+  });
+};
+
+const createAsyncCommonThunk = (type, url, method) => {
+  return createAsyncThunk(type, async (data, thunkAPI) => {
+    try {
+      const response = await axios[method](`api/${url}`, data);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: e.response.data.message,
+        status: e.response.status,
+      });
+    }
+  });
+};
+
+const createAsyncParamsThunk = (type, url, method) => {
+  return createAsyncThunk(type, async (params, thunkAPI) => {
+    try {
+      const response = await axios[method](`api/${url}`, { params });
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: e.response.data.message,
+        status: e.response.status,
+      });
+    }
+  });
+};
+
 export const addImages = createAsyncThunk(
   'add/images',
   async (formData, thunkAPI) => {
@@ -73,34 +115,6 @@ export const removeImages = createAsyncThunk(
   }
 );
 
-const createAsyncCommonThunk = (type, url, method) => {
-  return createAsyncThunk(type, async (data, thunkAPI) => {
-    try {
-      const response = await axios[method](`api/${url}`, data);
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue({
-        message: e.response.data.message,
-        status: e.response.status,
-      });
-    }
-  });
-};
-
-const createAsyncParamsThunk = (type, url, method) => {
-  return createAsyncThunk(type, async (params, thunkAPI) => {
-    try {
-      const response = await axios[method](`api/${url}`, { params });
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue({
-        message: e.response.data.message,
-        status: e.response.status,
-      });
-    }
-  });
-};
-
 export const addHookah = createAsyncCommonThunk(
   'create/hookahs',
   'products/hookahs',
@@ -145,4 +159,21 @@ export const getAccessories = createAsyncParamsThunk(
   'get/accessories',
   'products/accessories',
   'get'
+);
+export const updateHookah = createAsyncAction('update/hookahs', async data => {
+  return await axios.patch(`api/products/hookahs/${data.id}`, { ...data });
+});
+export const updateTobacco = createAsyncAction('update/tobacco', async data => {
+  return await axios.patch(`api/products/tobacco/${data.id}`, { ...data });
+});
+export const updateCoal = createAsyncAction('update/coals', async data => {
+  return await axios.patch(`api/products/coals/${data.id}`, { ...data });
+});
+export const updateAccessory = createAsyncAction(
+  'update/accessory',
+  async data => {
+    return await axios.patch(`api/products/accessories/${data.id}`, {
+      ...data,
+    });
+  }
 );

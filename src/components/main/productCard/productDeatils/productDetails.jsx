@@ -19,15 +19,19 @@ import Flavor from '../../addNew/categories/tobacco/flavor';
 import { Form, Text, DateBlock, SaveButton } from './productDetails.styled';
 import SaveIcon from '@mui/icons-material/Save';
 
-export default function ProductDetails({ product, enumValues }) {
+export default function ProductDetails({
+  product,
+  enumValues,
+  category,
+  handleUpdateDetails,
+}) {
   const { brands, promotions, colors, hookah_sizes } = enumValues;
   const { flavors, types, bowl_types } = enumValues;
   const { id, status, promotion, brand, price, available } = product;
   const { title, description, publish, createdAt, updatedAt } = product;
   const { hookahs, tobacco, coals, accessories } = product;
 
-  const { handleSubmit, control, watch, setValue } = useForm();
-  const watchedValues = watch();
+  const { handleSubmit, control } = useForm();
 
   const formatDate = date => {
     const dateObj = new Date(date);
@@ -41,13 +45,43 @@ export default function ProductDetails({ product, enumValues }) {
     return formattedDate;
   };
 
+  const handleDetails = formData => {
+    const data = {
+      promotion: formData.promotion,
+      brand: formData.brand,
+      status: formData.status,
+      price: +formData.price,
+      description: formData.description,
+      title: formData.title,
+      available: +formData.available,
+    };
+    if (category === 'hookah') {
+      data.color = formData.color.split(',')[0];
+      data.hookah_size = formData.hookah_size;
+    }
+    if (category === 'tobacco') {
+      data.flavor = formData.flavor;
+      data.tobacco_weight = +formData.tobacco_weight;
+      data.strength = formData.strength === 'none' ? null : formData.strength;
+    }
+    if (category === 'coal') {
+      data.coal_size = +formData.size;
+      data.coal_weight = +formData.coal_weight;
+    }
+    if (category === 'accessories') {
+      data.type = formData.type.type || formData.type;
+      data.bowl_type = formData.bowl_type;
+    }
+    handleUpdateDetails(data);
+  };
+
   return (
     <>
       <DateBlock>
         <Text>Created: {formatDate(createdAt)}</Text>
         <Text>Updated: {formatDate(updatedAt)}</Text>
       </DateBlock>
-      <Form component="form">
+      <Form component="form" onSubmit={handleSubmit(handleDetails)}>
         <BaseFilter
           control={control}
           name="id"
