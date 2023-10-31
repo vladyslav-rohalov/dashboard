@@ -42,20 +42,14 @@ export const productsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getProductById.fulfilled, (state, action) => {
-        // console.log(action.payload);
-        // const updatedProduct = action.payload[0];
-
-        // const updatedProductId = updatedProduct.id;
-
-        const updatedProducts = state.products.map(product => {
+        const updatedProducts = state.products.products.map(product => {
           if (product.id === action.payload.id) {
             return action.payload;
           }
           return product;
         });
 
-        state.products = updatedProducts;
-        // state.products = action.payload;
+        state.products = { ...state.products, products: updatedProducts };
         state.isLoading = false;
         state.error = null;
       });

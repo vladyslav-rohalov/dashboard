@@ -6,12 +6,15 @@ import { Box, IconButton, Tabs, Tab } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function ProductCard({
-  product,
+  products,
+  id,
   handleBack,
   enumValues,
   handleRefetch,
 }) {
   const [value, setValue] = useState(0);
+  const product = products.products.filter(product => product.id === id)[0];
+
   return (
     <Box>
       <IconButton onClick={handleBack}>

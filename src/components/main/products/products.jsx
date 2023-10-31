@@ -22,12 +22,12 @@ export default function Products() {
   const [limit, setLimit] = useState(25);
   const [params, setParams] = useState({ page: 1, limit: 25 });
   const [showCard, setShowCard] = useState(false);
-  const [product, setProduct] = useState();
+  const [productId, setProductId] = useState(null);
 
   const dispatch = useDispatch();
 
   const { products = [] } = useProducts();
-  console.log(products);
+
   const enumValues = useEnum();
   const pageCount = products?.counts?.total
     ? Math.ceil(products.counts.total / limit)
@@ -84,12 +84,7 @@ export default function Products() {
 
   const handleOpenCard = id => {
     setShowCard(true);
-    handleGetById(id);
-  };
-
-  const handleGetById = id => {
-    const result = products.products.filter(product => product.id === id);
-    setProduct(...result);
+    setProductId(id);
   };
 
   const handleRefetch = id => {
@@ -131,7 +126,8 @@ export default function Products() {
         </>
       ) : (
         <ProductCard
-          product={product}
+          products={products}
+          id={productId}
           handleBack={() => setShowCard(false)}
           enumValues={enumValues}
           handleRefetch={handleRefetch}

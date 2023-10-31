@@ -46,7 +46,6 @@ export const getProductById = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await axios.get(`api/products/id/${id}`);
-      console.log(response);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue({

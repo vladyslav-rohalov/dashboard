@@ -4,7 +4,7 @@ import { ImageBlock, IconBtnStyled, IconDelete } from './productPhoto.styled';
 
 export default function ProductPhoto({ product, handleRefetch }) {
   const { id, images, title } = product;
-  console.log(images);
+  // console.log(images);
   return (
     <Container>
       {images && (
@@ -21,7 +21,7 @@ export default function ProductPhoto({ product, handleRefetch }) {
           })}
         </ImageBlock>
       )}
-      <AddPhoto id={product.id} onSuccess={()=>handleRefetch(id)} />
+      <AddPhoto id={product.id} onSuccess={() => handleRefetch(id)} />
     </Container>
   );
 }
