@@ -17,14 +17,14 @@ export const CardContainer = styled(Box)(({ theme }) => ({
   borderRadius: 4,
 }));
 
-export const ImageBlock = styled(Box)(({ theme }) => ({
+export const ImageBlock = styled(Box)({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
   gap: 16,
   marginTop: 16,
   listStyle: 'none',
-}));
+});
 
 export const IconBtnStyled = styled(IconButton)({
   position: 'absolute',

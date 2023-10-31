@@ -56,6 +56,23 @@ export const getProductById = createAsyncThunk(
   }
 );
 
+export const removeImages = createAsyncThunk(
+  'remove/product.image',
+  async ({ id, images }, thunkAPI) => {
+    try {
+      const response = await axios.delete(`api/products/images/${id}`, {
+        data: images,
+      });
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: e.response.data.message,
+        status: e.response.status,
+      });
+    }
+  }
+);
+
 const createAsyncCommonThunk = (type, url, method) => {
   return createAsyncThunk(type, async (data, thunkAPI) => {
     try {

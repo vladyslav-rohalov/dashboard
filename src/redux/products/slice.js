@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getAllProducts, addHookah, addAccessory } from './operations';
 import { addCoal, addTobacco, addImages, publishProduct } from './operations';
 import { getHookahs, getAccessories, getCoals, getTobacco } from './operations';
-import { getProductById } from './operations';
+import { getProductById, removeImages } from './operations';
 
 const initialState = {
   response: null,
@@ -28,31 +28,38 @@ const postOperations = [
   { thunk: publishProduct },
 ];
 
+const updateProductOperations = [
+  { thunk: getProductById },
+  { thunk: removeImages },
+];
+
 export const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder
-      .addCase(getProductById.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(getProductById.rejected, (state, action) => {
-        state.error = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(getProductById.fulfilled, (state, action) => {
-        const updatedProducts = state.products.products.map(product => {
-          if (product.id === action.payload.id) {
-            return action.payload;
-          }
-          return product;
-        });
+    updateProductOperations.forEach(({ thunk }) => {
+      builder
+        .addCase(thunk.pending, state => {
+          state.isLoading = true;
+        })
+        .addCase(thunk.rejected, (state, action) => {
+          state.error = action.payload;
+          state.isLoading = action.payload;
+        })
+        .addCase(thunk.fulfilled, (state, action) => {
+          const updatedProducts = state.products.products.map(product => {
+            if (product.id === action.payload.id) {
+              return action.payload;
+            }
+            return product;
+          });
 
-        state.products = { ...state.products, products: updatedProducts };
-        state.isLoading = false;
-        state.error = null;
-      });
+          state.products = { ...state.products, products: updatedProducts };
+          state.isLoading = false;
+          state.error = null;
+        });
+    });
     getOperations.forEach(({ thunk }) => {
       builder
         .addCase(thunk.pending, state => {
