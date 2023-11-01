@@ -40,22 +40,17 @@ export default function ProductCard({
   const dispatch = useDispatch();
 
   const handleUpdateDetails = data => {
-    console.log(data);
     switch (category) {
       case 'hookah':
-        console.log('hookah');
         dispatch(updateHookah(data));
         break;
       case 'tobacco':
-        console.log('tobacco');
         dispatch(updateTobacco(data));
         break;
       case 'coal':
-        console.log('coal');
         dispatch(updateCoal(data));
         break;
       case 'accessories':
-        console.log('accessories');
         dispatch(updateAccessory(data));
         break;
       default:

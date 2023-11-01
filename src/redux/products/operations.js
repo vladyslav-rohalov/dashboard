@@ -67,7 +67,6 @@ export const addImages = createAsyncThunk(
     }
   }
 );
-
 export const publishProduct = createAsyncThunk(
   'publich/product',
   async (id, thunkAPI) => {
@@ -82,7 +81,6 @@ export const publishProduct = createAsyncThunk(
     }
   }
 );
-
 export const getProductById = createAsyncThunk(
   'get/product',
   async (id, thunkAPI) => {
@@ -97,7 +95,6 @@ export const getProductById = createAsyncThunk(
     }
   }
 );
-
 export const removeImages = createAsyncThunk(
   'remove/product.image',
   async ({ id, images }, thunkAPI) => {
@@ -114,7 +111,6 @@ export const removeImages = createAsyncThunk(
     }
   }
 );
-
 export const addHookah = createAsyncCommonThunk(
   'create/hookahs',
   'products/hookahs',

@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getAllProducts, addHookah, addAccessory } from './operations';
 import { addCoal, addTobacco, addImages, publishProduct } from './operations';
 import { getHookahs, getAccessories, getCoals, getTobacco } from './operations';
-import { getProductById, removeImages } from './operations';
+import { getProductById, removeImages, updateAccessory } from './operations';
+import { updateHookah, updateCoal, updateTobacco } from './operations';
 
 const initialState = {
   response: null,
@@ -31,6 +32,10 @@ const postOperations = [
 const updateProductOperations = [
   { thunk: getProductById },
   { thunk: removeImages },
+  { thunk: updateAccessory },
+  { thunk: updateCoal },
+  { thunk: updateHookah },
+  { thunk: updateTobacco },
 ];
 
 export const productsSlice = createSlice({

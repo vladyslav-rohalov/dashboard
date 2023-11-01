@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import BaseFilter from '../../products/filters/baseFilter/baseFilter';
 import Status from '../../addNew/commonFileds/status/status';
@@ -31,7 +32,12 @@ export default function ProductDetails({
   const { title, description, publish, createdAt, updatedAt } = product;
   const { hookahs, tobacco, coals, accessories } = product;
 
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, watch } = useForm();
+  // const watchedData = watch();
+
+  // useEffect(() => {
+  //   console.log(watchedData);
+  // }, [watchedData]);
 
   const formatDate = date => {
     const dateObj = new Date(date);
@@ -46,31 +52,41 @@ export default function ProductDetails({
   };
 
   const handleDetails = formData => {
+    console.log(formData);
+    const { id, promotion, brand, status, price, title } = formData;
+    const { description, available, color, hookah_size } = formData;
+    const { flavor, tobacco_weight, strength, size } = formData;
+    const { coal_weight, type, bowl_type, publish } = formData;
+
     const data = {
-      promotion: formData.promotion,
-      brand: formData.brand,
-      status: formData.status,
-      price: +formData.price,
-      description: formData.description,
-      title: formData.title,
-      available: +formData.available,
+      id,
+      promotion: promotion.promotion || promotion,
+      brand: brand.brand || brand,
+      status: status.status || status,
+      price: +price,
+      description,
+      title,
+      available: +available,
+      publish,
     };
     if (category === 'hookah') {
-      data.color = formData.color.split(',')[0];
-      data.hookah_size = formData.hookah_size;
+      data.color = color.color
+        ? color.color.split(',')[0]
+        : color.split(',')[0];
+      data.hookah_size = hookah_size.hookah_size || hookah_size;
     }
     if (category === 'tobacco') {
-      data.flavor = formData.flavor;
-      data.tobacco_weight = +formData.tobacco_weight;
-      data.strength = formData.strength === 'none' ? null : formData.strength;
+      data.flavor = flavor.flavor || flavor;
+      data.tobacco_weight = +tobacco_weight;
+      data.strength = strength === 'none' ? null : strength;
     }
     if (category === 'coal') {
-      data.coal_size = +formData.size;
-      data.coal_weight = +formData.coal_weight;
+      data.coal_size = +size;
+      data.coal_weight = +coal_weight;
     }
     if (category === 'accessories') {
-      data.type = formData.type.type || formData.type;
-      data.bowl_type = formData.bowl_type;
+      data.type = type.type || type;
+      data.bowl_type = !bowl_type ? null : bowl_type.bowl_type || bowl_type;
     }
     handleUpdateDetails(data);
   };
@@ -146,14 +162,12 @@ export default function ProductDetails({
               value={accessories.type.type}
               width={200}
             />
-            {accessories.bowl_type && (
-              <BowlType
-                control={control}
-                list={bowl_types}
-                value={accessories.bowl_type.bowl_type}
-                width={200}
-              />
-            )}
+            <BowlType
+              control={control}
+              list={bowl_types}
+              value={accessories.bowl_type?.bowl_type}
+              width={200}
+            />
           </>
         )}
         {coals && (
