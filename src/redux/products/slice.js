@@ -7,7 +7,7 @@ import { updateHookah, updateCoal, updateTobacco } from './operations';
 
 const initialState = {
   response: null,
-  products: [],
+  products: { products: [], counts: { total: null } },
   error: null,
   isLoading: false,
 };
@@ -25,7 +25,6 @@ const postOperations = [
   { thunk: addAccessory },
   { thunk: addCoal },
   { thunk: addTobacco },
-  { thunk: addImages },
   { thunk: publishProduct },
 ];
 
@@ -36,6 +35,7 @@ const updateProductOperations = [
   { thunk: updateCoal },
   { thunk: updateHookah },
   { thunk: updateTobacco },
+  { thunk: addImages },
 ];
 
 export const productsSlice = createSlice({

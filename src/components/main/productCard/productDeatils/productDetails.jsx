@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import BaseFilter from '../../products/filters/baseFilter/baseFilter';
 import Status from '../../addNew/commonFileds/status/status';
@@ -32,12 +31,7 @@ export default function ProductDetails({
   const { title, description, publish, createdAt, updatedAt } = product;
   const { hookahs, tobacco, coals, accessories } = product;
 
-  const { handleSubmit, control, watch } = useForm();
-  // const watchedData = watch();
-
-  // useEffect(() => {
-  //   console.log(watchedData);
-  // }, [watchedData]);
+  const { handleSubmit, control } = useForm();
 
   const formatDate = date => {
     const dateObj = new Date(date);

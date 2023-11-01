@@ -31,7 +31,7 @@ export default function CardSwiper({ promotion, images, swiperRef }) {
         modules={[Autoplay, Pagination, EffectFade]}
         style={swiperStyles}
       >
-        {promotion && (
+        {promotion && promotion !== 'none' && (
           <Chip
             label={promotion}
             sx={{

@@ -2,10 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAllProducts, getHookahs } from '../../../redux/products/operations';
 import { getTobacco, getCoals } from '../../../redux/products/operations';
-import {
-  getAccessories,
-  getProductById,
-} from '../../../redux/products/operations';
+import { getAccessories } from '../../../redux/products/operations';
 import { useProducts } from '../../../hooks/useProducts';
 import { useEnum } from '../../../hooks/useEnum';
 import SetCatergory from '../common/setCategory/setCategory';
@@ -87,10 +84,6 @@ export default function Products() {
     setProductId(id);
   };
 
-  const handleRefetch = id => {
-    dispatch(getProductById(id));
-  };
-
   return (
     <>
       {!showCard ? (
@@ -130,7 +123,6 @@ export default function Products() {
           id={productId}
           handleBack={() => setShowCard(false)}
           enumValues={enumValues}
-          handleRefetch={handleRefetch}
         />
       )}
     </>

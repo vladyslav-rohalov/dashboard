@@ -5,20 +5,16 @@ import {
   updateTobacco,
   updateCoal,
   updateAccessory,
+  removeImages,
 } from '../../../redux/products/operations';
 import ProductDetails from './productDeatils/productDetails';
 import ProductPhoto from './productPhoto/productPhoto';
+import ProductPreview from './productPreview/productPreview';
 import { PageTitle } from '../addNew/addNew.styled';
 import { Box, IconButton, Tabs, Tab } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-export default function ProductCard({
-  products,
-  id,
-  handleBack,
-  enumValues,
-  handleRefetch,
-}) {
+export default function ProductCard({ products, id, handleBack, enumValues }) {
   const [value, setValue] = useState(0);
   const [category, setCategory] = useState('');
   const product = products.products.filter(product => product.id === id)[0];
@@ -58,6 +54,10 @@ export default function ProductCard({
     }
   };
 
+  const handleDeleteImages = ({ id, images }) => {
+    dispatch(removeImages({ id, images }));
+  };
+
   return (
     <Box>
       <IconButton onClick={handleBack}>
@@ -68,7 +68,7 @@ export default function ProductCard({
         <Tabs value={value}>
           <Tab onClick={setValue.bind(this, 0)} label={'Details'} />
           <Tab onClick={setValue.bind(this, 1)} label={'Photo'} />
-          <Tab onClick={setValue.bind(this, 2)} label={'Result'} />
+          <Tab onClick={setValue.bind(this, 2)} label={'Preview'} />
         </Tabs>
       </Box>
       {value === 0 && (
@@ -80,8 +80,12 @@ export default function ProductCard({
         />
       )}
       {value === 1 && (
-        <ProductPhoto product={product} handleRefetch={handleRefetch} />
+        <ProductPhoto
+          product={product}
+          handleDeleteImages={handleDeleteImages}
+        />
       )}
+      {value === 2 && <ProductPreview product={product} />}
     </Box>
   );
 }

@@ -4,7 +4,7 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 
 export default function SpeedDialCart() {
   return (
-    <SpeedDial ariaLabel="SpeedDial cart" icon={<IconCart />}>
+    <SpeedDial ariaLabel="SpeedDial" icon={<IconCart />}>
       <SpeedDialAction icon={<IconCartRemove />} tooltipTitle="delete" />
       <SpeedDialAction icon={<IconCartOpen />} tooltipTitle="cart" />
     </SpeedDial>

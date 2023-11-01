@@ -1,5 +1,3 @@
-import { useDispatch } from 'react-redux';
-import { removeImages } from '../../../../redux/products/operations';
 import { useForm, Controller } from 'react-hook-form';
 import AddPhoto from '../../addNew/addPhoto/addPhoto';
 import { FormControl, Checkbox } from '@mui/material';
@@ -7,12 +5,11 @@ import { Container, CardContainer, Image } from './productPhoto.styled';
 import { ImageBlock, IconDelete } from './productPhoto.styled';
 import { SubmitButton } from '../../addNew/addPhoto/addPhoto.styled';
 
-export default function ProductPhoto({ product, handleRefetch }) {
+export default function ProductPhoto({ product, handleDeleteImages }) {
   const { id, images, title } = product;
   const { control, handleSubmit } = useForm();
-  const dispatch = useDispatch();
 
-  const handleDeleteImages = data => {
+  const handleImages = data => {
     const deleteIndexes = [];
     data.images.forEach((item, index) => {
       if (item === true) {
@@ -22,16 +19,13 @@ export default function ProductPhoto({ product, handleRefetch }) {
     const imagesToDelete = images.filter((image, index) => {
       return deleteIndexes.includes(index);
     });
-    dispatch(removeImages({ id, images: imagesToDelete }));
+    handleDeleteImages({ id, images: imagesToDelete });
   };
 
   return (
     <Container>
       {images && (
-        <FormControl
-          component={'form'}
-          onSubmit={handleSubmit(handleDeleteImages)}
-        >
+        <FormControl component={'form'} onSubmit={handleSubmit(handleImages)}>
           <ImageBlock component="ul">
             {images.map((image, index) => {
               return (
@@ -64,7 +58,7 @@ export default function ProductPhoto({ product, handleRefetch }) {
           </SubmitButton>
         </FormControl>
       )}
-      <AddPhoto id={product.id} onSuccess={() => handleRefetch(id)} />
+      <AddPhoto id={product.id} onSuccess={() => {}} />
     </Container>
   );
 }

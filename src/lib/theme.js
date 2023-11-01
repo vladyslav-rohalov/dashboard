@@ -160,7 +160,7 @@ export const theme = createTheme({
           '& .MuiFab-primary': {
             width: 46,
             height: 46,
-            backgroundColor: theme.palette.primary.light,
+            // backgroundColor: theme.palette.primary.light,
           },
         }),
       },
