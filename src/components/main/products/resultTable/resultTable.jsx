@@ -1,5 +1,5 @@
 import { Table, TableBody } from '@mui/material';
-import { TableHead, TableRow, IconButton } from '@mui/material';
+import { TableHead, TableRow, IconButton, Badge } from '@mui/material';
 import { StyledTableCell, TableContainerStyled } from './resultTable.styled';
 import { IconImage, StyledTableRow, IconInfo } from './resultTable.styled';
 
@@ -15,7 +15,7 @@ export default function ResultTable({ products, handleOpenCard }) {
       return 'accessories';
     }
   };
-
+  console.log(products);
   const formatDate = date => {
     const dateObj = new Date(date);
     const day = String(dateObj.getDate()).padStart(2, '0');
@@ -56,7 +56,20 @@ export default function ResultTable({ products, handleOpenCard }) {
               </StyledTableCell>
               <StyledTableCell align="left">{product.status}</StyledTableCell>
               <StyledTableCell align="left">
-                <IconImage image={!!product.images} />
+                <Badge
+                  badgeContent={product.images?.length || 0}
+                  color="primary"
+                  sx={{
+                    '& .MuiBadge-badge': {
+                      minWidth: 12,
+                      height: 12,
+                      fontSize: 8,
+                      padding: 0,
+                    },
+                  }}
+                >
+                  <IconImage image={!!product.images} />
+                </Badge>
               </StyledTableCell>
               <StyledTableCell align="left">{product.price}</StyledTableCell>
               <StyledTableCell align="left">
