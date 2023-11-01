@@ -23,7 +23,7 @@ export default function Products() {
 
   const dispatch = useDispatch();
 
-  const { products = [] } = useProducts();
+  const { products = [], error } = useProducts();
 
   const enumValues = useEnum();
   const pageCount = products?.counts?.total
@@ -60,7 +60,6 @@ export default function Products() {
   const handleLimit = value => {
     setLimit(value);
     setParams(prevParams => ({ ...prevParams, limit: value, page: 1 }));
-    console.log({ ...params, limit: value, page: 1 });
     handleFetchAll({ ...params, limit: value, page: 1 });
   };
 
@@ -128,6 +127,7 @@ export default function Products() {
           id={productId}
           handleBack={() => setShowCard(false)}
           enumValues={enumValues}
+          error={error}
         />
       )}
     </>

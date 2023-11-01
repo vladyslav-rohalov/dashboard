@@ -38,15 +38,14 @@ export default function ProductDetails({
     const day = String(dateObj.getDate()).padStart(2, '0');
     const month = String(dateObj.getMonth() + 1).padStart(2, '0');
     const year = dateObj.getFullYear();
-    const hour = dateObj.getHours();
-    const minute = dateObj.getMinutes();
+    const hour = String(dateObj.getHours()).padStart(2, '0');
+    const minute = String(dateObj.getMinutes()).padStart(2, '0');
 
     const formattedDate = `${day}-${month}-${year} ${hour}:${minute}`;
     return formattedDate;
   };
 
   const handleDetails = formData => {
-    console.log(formData);
     const { id, promotion, brand, status, price, title } = formData;
     const { description, available, color, hookah_size } = formData;
     const { flavor, tobacco_weight, strength, size } = formData;

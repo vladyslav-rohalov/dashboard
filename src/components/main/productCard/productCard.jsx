@@ -12,11 +12,18 @@ import ProductDetails from './productDeatils/productDetails';
 import ProductPhoto from './productPhoto/productPhoto';
 import ProductPreview from './productPreview/productPreview';
 import DeleteProduct from './deleteProduct/deleteProduct';
+import AlertNotify from '../../onError/alert';
 import { PageTitle } from '../addNew/addNew.styled';
 import { Box, IconButton, Tabs, Tab } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-export default function ProductCard({ products, id, handleBack, enumValues }) {
+export default function ProductCard({
+  products,
+  id,
+  handleBack,
+  enumValues,
+  error,
+}) {
   const [value, setValue] = useState(0);
   const [category, setCategory] = useState('');
   const product = products.products.filter(product => product.id === id)[0];
@@ -81,6 +88,7 @@ export default function ProductCard({ products, id, handleBack, enumValues }) {
           <Tab onClick={setValue.bind(this, 3)} label={'Delete'} />
         </Tabs>
       </Box>
+      {error && <AlertNotify error={error} />}
       {value === 0 && (
         <ProductDetails
           product={product}

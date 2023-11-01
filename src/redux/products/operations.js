@@ -16,7 +16,6 @@ const createAsyncAction = (type, request) => {
     }
   });
 };
-
 const createAsyncCommonThunk = (type, url, method) => {
   return createAsyncThunk(type, async (data, thunkAPI) => {
     try {
@@ -30,7 +29,6 @@ const createAsyncCommonThunk = (type, url, method) => {
     }
   });
 };
-
 const createAsyncParamsThunk = (type, url, method) => {
   return createAsyncThunk(type, async (params, thunkAPI) => {
     try {
@@ -44,7 +42,6 @@ const createAsyncParamsThunk = (type, url, method) => {
     }
   });
 };
-
 export const addImages = createAsyncThunk(
   'add/images',
   async (formData, thunkAPI) => {
