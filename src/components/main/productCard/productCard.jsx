@@ -6,10 +6,12 @@ import {
   updateCoal,
   updateAccessory,
   removeImages,
+  deleteProduct,
 } from '../../../redux/products/operations';
 import ProductDetails from './productDeatils/productDetails';
 import ProductPhoto from './productPhoto/productPhoto';
 import ProductPreview from './productPreview/productPreview';
+import DeleteProduct from './deleteProduct/deleteProduct';
 import { PageTitle } from '../addNew/addNew.styled';
 import { Box, IconButton, Tabs, Tab } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -58,6 +60,13 @@ export default function ProductCard({ products, id, handleBack, enumValues }) {
     dispatch(removeImages({ id, images }));
   };
 
+  const handleDeleteProduct = async () => {
+    const response = await dispatch(deleteProduct(product.id));
+    if (response.meta.requestStatus === 'fulfilled') {
+      handleBack();
+    }
+  };
+
   return (
     <Box>
       <IconButton onClick={handleBack}>
@@ -69,6 +78,7 @@ export default function ProductCard({ products, id, handleBack, enumValues }) {
           <Tab onClick={setValue.bind(this, 0)} label={'Details'} />
           <Tab onClick={setValue.bind(this, 1)} label={'Photo'} />
           <Tab onClick={setValue.bind(this, 2)} label={'Preview'} />
+          <Tab onClick={setValue.bind(this, 3)} label={'Delete'} />
         </Tabs>
       </Box>
       {value === 0 && (
@@ -86,6 +96,7 @@ export default function ProductCard({ products, id, handleBack, enumValues }) {
         />
       )}
       {value === 2 && <ProductPreview product={product} />}
+      {value === 3 && <DeleteProduct handleDelete={handleDeleteProduct} />}
     </Box>
   );
 }

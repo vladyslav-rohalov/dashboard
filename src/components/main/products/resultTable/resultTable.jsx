@@ -15,7 +15,7 @@ export default function ResultTable({ products, handleOpenCard }) {
       return 'accessories';
     }
   };
-  console.log(products);
+
   const formatDate = date => {
     const dateObj = new Date(date);
     const day = String(dateObj.getDate()).padStart(2, '0');

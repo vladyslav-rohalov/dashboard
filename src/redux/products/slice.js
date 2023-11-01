@@ -4,6 +4,7 @@ import { addCoal, addTobacco, addImages, publishProduct } from './operations';
 import { getHookahs, getAccessories, getCoals, getTobacco } from './operations';
 import { getProductById, removeImages, updateAccessory } from './operations';
 import { updateHookah, updateCoal, updateTobacco } from './operations';
+import { deleteProduct } from './operations';
 
 const initialState = {
   response: null,
@@ -43,6 +44,23 @@ export const productsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
+    builder
+      .addCase(deleteProduct.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = action.payload;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        const index = state.products.products.findIndex(
+          product => product.id === action.payload
+        );
+        const updatedProducts = state.products.products.splice(index, 1);
+        state.products.products = updatedProducts;
+        state.isLoading = false;
+        state.error = null;
+      });
     updateProductOperations.forEach(({ thunk }) => {
       builder
         .addCase(thunk.pending, state => {

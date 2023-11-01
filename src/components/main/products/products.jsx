@@ -84,6 +84,10 @@ export default function Products() {
     setProductId(id);
   };
 
+  const handleSort = sort => {
+    choiseMethod(category, { ...params, sort: sort });
+  };
+
   return (
     <>
       {!showCard ? (
@@ -96,6 +100,7 @@ export default function Products() {
             page={page}
             limit={limit}
             handleFetch={handleFetchAll}
+            handleSort={handleSort}
             updateParams={searchParams =>
               setParams({ ...searchParams, page: 1, limit: 25 })
             }

@@ -173,3 +173,17 @@ export const updateAccessory = createAsyncAction(
     });
   }
 );
+export const deleteProduct = createAsyncThunk(
+  'delete/product',
+  async (id, thunkAPI) => {
+    try {
+      await axios.delete(`api/products/${id}`);
+      return id;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: e.response.data.message,
+        status: e.response.status,
+      });
+    }
+  }
+);

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiltersBlock } from '../../addNew/addNew.styled';
 import BaseFilter from './baseFilter/baseFilter';
@@ -27,18 +28,24 @@ export default function SearchFilters({
   limit,
   handleFetch,
   updateParams,
+  handleSort,
 }) {
   const { brands, promotions, colors, hookah_sizes } = enumValues;
   const { flavors, types, bowl_types } = enumValues;
 
-  const { handleSubmit, control, reset } = useForm();
+  const { handleSubmit, control, reset, watch } = useForm();
+  const sortFilter = watch('sort');
+
+  useEffect(() => {
+    handleSort(sortFilter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortFilter]);
 
   const handleSearch = formData => {
     const params = {
       page,
       limit,
     };
-
     Object.entries(formData).forEach(([key, value]) => {
       if (value !== null && value !== '') {
         if (typeof value === 'object') {
