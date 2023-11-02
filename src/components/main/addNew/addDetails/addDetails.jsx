@@ -1,8 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getAllEnums } from '../../../../redux/enums/operations';
-import { addHookah, addTobacco } from '../../../../redux/products/operations';
-import { addCoal, addAccessory } from '../../../../redux/products/operations';
+import { useState } from 'react';
 import { useEnum } from '../../../../hooks/useEnum';
 import { useForm } from 'react-hook-form';
 import { Button, FormControl } from '@mui/material';
@@ -25,68 +21,11 @@ import Strength from '../categories/tobacco/strength';
 import Flavor from '../categories/tobacco/flavor';
 import { FiltersBlock } from '../addNew.styled';
 
-export default function AddDetails({ onSuccess }) {
+export default function AddDetails({ handleAddDetails }) {
   const [category, setCategory] = useState('hookah');
 
   const { handleSubmit, control, watch, setValue } = useForm();
   const watchedValues = watch();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllEnums());
-  }, [dispatch]);
-
-  const handleAddDetails = async formData => {
-    const commonData = {
-      promotion: formData.promotion?.promotion,
-      brand: formData.brand?.brand,
-      status: formData.status,
-      price: +formData.price,
-      description: formData.description,
-      title: formData.title,
-      available: +formData.available,
-    };
-
-    if (category === 'hookah') {
-      const data = {
-        ...commonData,
-        color: formData.color?.color.split(',')[0],
-        hookah_size: formData.hookah_size?.hookah_size,
-      };
-      const response = await dispatch(addHookah(data));
-      if (response.meta.requestStatus === 'rejected') return;
-    }
-    if (category === 'tobacco') {
-      const data = {
-        ...commonData,
-        flavor: formData.flavor?.flavor,
-        tobacco_weight: +formData.tobacco_weight,
-        strength: formData.strength === 'none' ? null : formData.strength,
-      };
-      const response = await dispatch(addTobacco(data));
-      if (response.meta.requestStatus === 'rejected') return;
-    }
-    if (category === 'coal') {
-      const data = {
-        ...commonData,
-        coal_size: +formData.size,
-        coal_weight: +formData.coal_weight,
-      };
-      const response = await dispatch(addCoal(data));
-      if (response.meta.requestStatus === 'rejected') return;
-    }
-    if (category === 'accessories') {
-      const data = {
-        ...commonData,
-        type: formData.type?.type,
-        bowl_type: formData.bowl_type?.bowl_type,
-      };
-      const response = await dispatch(addAccessory(data));
-      if (response.meta.requestStatus === 'rejected') return;
-    }
-    onSuccess();
-  };
 
   const {
     bowl_types,
@@ -99,11 +38,15 @@ export default function AddDetails({ onSuccess }) {
     types,
   } = useEnum();
 
+  const handleDetails = formData => {
+    handleAddDetails(formData, category);
+  };
+
   return (
     <>
       <SetCatergory handleCategory={e => setCategory(e)} />
       {!isLoading && (
-        <FormControl component="form" onSubmit={handleSubmit(handleAddDetails)}>
+        <FormControl component="form" onSubmit={handleSubmit(handleDetails)}>
           <FiltersBlock>
             <Status width={200} control={control} />
             <Promotion width={200} control={control} list={promotions} />

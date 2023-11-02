@@ -52,7 +52,7 @@ export default function CardSwiper({ promotion, images, swiperRef }) {
         {images ? (
           images.map(image => {
             return (
-              <SwiperSlide key={image}>
+              <SwiperSlide key={image} style={{ backgroundColor: '#213555' }}>
                 <ImageStyled
                   className="scaleImage"
                   src={image}

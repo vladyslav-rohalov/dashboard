@@ -5,7 +5,11 @@ import { Container, CardContainer, Image } from './productPhoto.styled';
 import { ImageBlock, IconDelete } from './productPhoto.styled';
 import { SubmitButton } from '../../addNew/addPhoto/addPhoto.styled';
 
-export default function ProductPhoto({ product, handleDeleteImages }) {
+export default function ProductPhoto({
+  product,
+  handleDeleteImages,
+  handleAddImages,
+}) {
   const { id, images, title } = product;
   const { control, handleSubmit } = useForm();
 
@@ -58,7 +62,11 @@ export default function ProductPhoto({ product, handleDeleteImages }) {
           </SubmitButton>
         </FormControl>
       )}
-      <AddPhoto id={product.id} onSuccess={() => {}} />
+      <AddPhoto
+        id={product.id}
+        onSuccess={() => {}}
+        handleAddImages={handleAddImages}
+      />
     </Container>
   );
 }

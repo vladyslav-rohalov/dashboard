@@ -5,6 +5,7 @@ import {
   updateTobacco,
   updateCoal,
   updateAccessory,
+  addImages,
   removeImages,
   deleteProduct,
 } from '../../../redux/products/operations';
@@ -16,6 +17,7 @@ import AlertNotify from '../../onError/alert';
 import { PageTitle } from '../addNew/addNew.styled';
 import { Box, IconButton, Tabs, Tab } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { LinearProgress } from '@mui/material';
 
 export default function ProductCard({
   products,
@@ -24,54 +26,68 @@ export default function ProductCard({
   enumValues,
   error,
 }) {
+  const [spinner, setSpinner] = useState(false);
   const [value, setValue] = useState(0);
   const [category, setCategory] = useState('');
   const product = products.products.filter(product => product.id === id)[0];
 
-  const checkCat = () => {
+  useEffect(() => {
     if (product) {
       if (product.hookahs) setCategory('hookah');
       if (product.tobacco) setCategory('tobacco');
       if (product.coals) setCategory('coal');
       if (product.accessories) setCategory('accessories');
     }
-  };
-
-  useEffect(() => {
-    checkCat();
-    // eslint-disable-next-line
-  }, [products]);
+  }, [product]);
 
   const dispatch = useDispatch();
 
-  const handleUpdateDetails = data => {
+  const handleUpdateDetails = async data => {
     switch (category) {
       case 'hookah':
-        dispatch(updateHookah(data));
+        setSpinner(true);
+        await dispatch(updateHookah(data));
+        setSpinner(false);
         break;
       case 'tobacco':
-        dispatch(updateTobacco(data));
+        setSpinner(true);
+        await dispatch(updateTobacco(data));
+        setSpinner(false);
         break;
       case 'coal':
-        dispatch(updateCoal(data));
+        setSpinner(true);
+        await dispatch(updateCoal(data));
+        setSpinner(false);
         break;
       case 'accessories':
-        dispatch(updateAccessory(data));
+        setSpinner(true);
+        await dispatch(updateAccessory(data));
+        setSpinner(false);
         break;
       default:
         break;
     }
   };
 
-  const handleDeleteImages = ({ id, images }) => {
-    dispatch(removeImages({ id, images }));
+  const handleDeleteImages = async ({ id, images }) => {
+    setSpinner(true);
+    await dispatch(removeImages({ id, images }));
+    setSpinner(false);
   };
 
   const handleDeleteProduct = async () => {
+    setSpinner(true);
     const response = await dispatch(deleteProduct(product.id));
     if (response.meta.requestStatus === 'fulfilled') {
       handleBack();
     }
+    setSpinner(false);
+  };
+
+  const handleAddImages = async formData => {
+    setSpinner(true);
+    await dispatch(addImages(formData));
+    setSpinner(false);
   };
 
   return (
@@ -89,6 +105,11 @@ export default function ProductCard({
         </Tabs>
       </Box>
       {error && <AlertNotify error={error} />}
+      {spinner && (
+        <Box sx={{ width: '100%', mt: 2 }}>
+          <LinearProgress />
+        </Box>
+      )}
       {value === 0 && (
         <ProductDetails
           product={product}
@@ -101,6 +122,7 @@ export default function ProductCard({
         <ProductPhoto
           product={product}
           handleDeleteImages={handleDeleteImages}
+          handleAddImages={handleAddImages}
         />
       )}
       {value === 2 && <ProductPreview product={product} />}

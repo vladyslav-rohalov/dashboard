@@ -79,6 +79,7 @@ export const productsSlice = createSlice({
           });
 
           state.products = { ...state.products, products: updatedProducts };
+          state.response = action.payload;
           state.isLoading = false;
           state.error = null;
         });

@@ -1,6 +1,4 @@
 import { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { addImages } from '../../../../redux/products/operations';
 import { rotateImage } from '../../../../lib/rotateImage';
 import { Container, MainBlock, ImagesBlock } from './addPhoto.styled';
 import { ImageBlock, IconDelete, IconRotate } from './addPhoto.styled';
@@ -8,13 +6,12 @@ import { SubmitButton, UploadButton, Input } from './addPhoto.styled';
 import { IconImage, Text } from './addPhoto.styled';
 import { Switch, FormControlLabel, FormGroup } from '@mui/material';
 
-export default function AddPhoto({ id, onSuccess }) {
+export default function AddPhoto({ id, handleAddImages }) {
   const [fileList, setFileList] = useState([]);
-  const [deleteBG, setDeleteBG] = useState(true);
-  const [trim, setTrim] = useState(true);
+  const [deleteBG, setDeleteBG] = useState(false);
+  const [trim, setTrim] = useState(false);
 
   const imagePicker = useRef(null);
-  const dispatch = useDispatch();
 
   const handlePick = () => {
     imagePicker.current.click();
@@ -44,7 +41,7 @@ export default function AddPhoto({ id, onSuccess }) {
       });
   };
 
-  const handleAddImages = async () => {
+  const handleImages = async () => {
     if (fileList.length) {
       const formData = new FormData();
       fileList.forEach(file => {
@@ -53,12 +50,9 @@ export default function AddPhoto({ id, onSuccess }) {
       formData.append('id', id);
       formData.append('deleteBG', deleteBG);
       formData.append('trim', trim);
-      const response = await dispatch(addImages(formData));
-      if (response.meta.requestStatus === 'rejected') return;
+      handleAddImages(formData);
+      setFileList([]);
     }
-    setFileList([]);
-    onSuccess();
-    setFileList([]);
   };
 
   return (
@@ -127,7 +121,7 @@ export default function AddPhoto({ id, onSuccess }) {
           </ImagesBlock>
         )}
       </Container>
-      <SubmitButton variant="contained" onClick={handleAddImages}>
+      <SubmitButton variant="contained" onClick={handleImages}>
         Add images
       </SubmitButton>
     </>
