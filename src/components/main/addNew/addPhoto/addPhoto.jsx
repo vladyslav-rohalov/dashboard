@@ -6,9 +6,13 @@ import { Container, MainBlock, ImagesBlock } from './addPhoto.styled';
 import { ImageBlock, IconDelete, IconRotate } from './addPhoto.styled';
 import { SubmitButton, UploadButton, Input } from './addPhoto.styled';
 import { IconImage, Text } from './addPhoto.styled';
+import { Switch, FormControlLabel, FormGroup } from '@mui/material';
 
 export default function AddPhoto({ id, onSuccess }) {
   const [fileList, setFileList] = useState([]);
+  const [deleteBG, setDeleteBG] = useState(true);
+  const [trim, setTrim] = useState(true);
+
   const imagePicker = useRef(null);
   const dispatch = useDispatch();
 
@@ -47,11 +51,14 @@ export default function AddPhoto({ id, onSuccess }) {
         formData.append(`images`, file);
       });
       formData.append('id', id);
+      formData.append('deleteBG', deleteBG);
+      formData.append('trim', trim);
       const response = await dispatch(addImages(formData));
       if (response.meta.requestStatus === 'rejected') return;
     }
     setFileList([]);
     onSuccess();
+    setFileList([]);
   };
 
   return (
@@ -70,6 +77,26 @@ export default function AddPhoto({ id, onSuccess }) {
             multiple
             accept="image/*,.png,.jpeg,"
           />
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={deleteBG}
+                  onChange={e => setDeleteBG(e.target.checked)}
+                />
+              }
+              label="Delete background"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={trim}
+                  onChange={e => setTrim(e.target.checked)}
+                />
+              }
+              label="Trim"
+            />
+          </FormGroup>
           <UploadButton
             variant="contained"
             onClick={handlePick}
