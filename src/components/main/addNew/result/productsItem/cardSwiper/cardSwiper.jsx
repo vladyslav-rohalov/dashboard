@@ -10,6 +10,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
 const defaultImage = require('../../../../../../images/no-image.png');
+const PRODUCT_IMAGE_URL =
+  'https://smokey-shop.s3.eu-central-1.amazonaws.com/products/';
 
 export default function CardSwiper({ promotion, images, swiperRef }) {
   const color = chipColor(promotion);
@@ -55,7 +57,7 @@ export default function CardSwiper({ promotion, images, swiperRef }) {
               <SwiperSlide key={image} style={{ backgroundColor: '#213555' }}>
                 <ImageStyled
                   className="scaleImage"
-                  src={image}
+                  src={PRODUCT_IMAGE_URL + image}
                   alt="product"
                   width={'100%'}
                   height={'100%'}

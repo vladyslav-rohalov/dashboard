@@ -5,6 +5,9 @@ import { Container, CardContainer, Image } from './productPhoto.styled';
 import { ImageBlock, IconDelete } from './productPhoto.styled';
 import { SubmitButton } from '../../addNew/addPhoto/addPhoto.styled';
 
+const PRODUCT_IMAGE_URL =
+  'https://smokey-shop.s3.eu-central-1.amazonaws.com/products/';
+
 export default function ProductPhoto({
   product,
   handleDeleteImages,
@@ -34,7 +37,12 @@ export default function ProductPhoto({
             {images.map((image, index) => {
               return (
                 <CardContainer key={image} component="li">
-                  <Image src={image} width={200} height={216} alt={title} />
+                  <Image
+                    src={PRODUCT_IMAGE_URL + image}
+                    width={200}
+                    height={216}
+                    alt={title}
+                  />
                   <Controller
                     name={`images[${index}]`}
                     control={control}
