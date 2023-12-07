@@ -12,19 +12,22 @@ const token = {
   },
 };
 
-export const logIn = createAsyncThunk('auth/login', async (user, thunkAPI) => {
-  try {
-    const response = await axios.post('/auth/login', user);
-    token.set(response.data.token);
+export const logIn = createAsyncThunk(
+  'auth/admin/login',
+  async (user, thunkAPI) => {
+    try {
+      const response = await axios.post('/auth/admin/login', user);
+      token.set(response.data.token);
 
-    return response.data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue({
-      message: e.response.data.message,
-      status: e.response.status,
-    });
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: e.response.data.message,
+        status: e.response.status,
+      });
+    }
   }
-});
+);
 
 export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
@@ -39,7 +42,7 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 });
 
 export const refreshUser = createAsyncThunk(
-  'users/current',
+  'admin/current',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
@@ -49,7 +52,7 @@ export const refreshUser = createAsyncThunk(
 
     try {
       token.set(persistedToken);
-      const response = await axios.get('/users/current');
+      const response = await axios.get('/users/admin/current');
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue({
