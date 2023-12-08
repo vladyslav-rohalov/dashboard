@@ -11,7 +11,7 @@ import 'swiper/css/effect-fade';
 
 const defaultImage = require('../../../../../../images/no-image.png');
 const PRODUCT_IMAGE_URL =
-  'https://smokey-shop.s3.eu-central-1.amazonaws.com/products/';
+  'https://smokey-s3.s3.eu-central-1.amazonaws.com/products/';
 
 export default function CardSwiper({ promotion, images, swiperRef }) {
   const color = chipColor(promotion);

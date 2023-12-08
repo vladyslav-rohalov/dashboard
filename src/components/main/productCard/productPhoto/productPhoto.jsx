@@ -6,7 +6,7 @@ import { ImageBlock, IconDelete } from './productPhoto.styled';
 import { SubmitButton } from '../../addNew/addPhoto/addPhoto.styled';
 
 const PRODUCT_IMAGE_URL =
-  'https://smokey-shop.s3.eu-central-1.amazonaws.com/products/';
+  'https://smokey-s3.s3.eu-central-1.amazonaws.com/products/';
 
 export default function ProductPhoto({
   product,

@@ -2,7 +2,7 @@ import ProductItem from './productsItem/productItem';
 import { Container, ButtonBlock, Button } from './result.styled';
 
 export default function Result({ product, handlePublish, handleFinish }) {
-  console.log(product);
+
 
   return (
     <Container>
